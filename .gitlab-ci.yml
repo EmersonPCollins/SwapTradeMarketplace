@@ -46,7 +46,7 @@ unit_tests:
     - ./gradlew test
   artifacts:
     when: always
-    expire_in: never
+    expire_in: 14 weeks
     paths:
       - app/build/reports/tests/
   tags:
