@@ -20,6 +20,7 @@ import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -71,6 +72,7 @@ public class DatabaseServiceTest {
     @Test
     public void readUser() {
 
+        when(mockedDatabaseRef.child(anyString())).thenReturn(mockedDatabaseRef);
         databaseSvc = new DatabaseService(mockedDatabase);
 
         User user = new User("John", "Doe", "test@gmail.com", "password");
@@ -90,7 +92,7 @@ public class DatabaseServiceTest {
                      }
                  }).when(mockedDatabaseRef).addValueEventListener(any(ValueEventListener.class));
 
-        assertEquals(databaseSvc.readUser(user), user);
+        assertEquals(databaseSvc.readUser("test@gmail.com"), user);
 
     }
 
