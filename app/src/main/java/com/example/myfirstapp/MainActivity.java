@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         TextView errorMessage = (TextView) findViewById(R.id.errorMessageTextView);
         if(!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && location.getText().toString().isEmpty() && goodDate(date.getText().toString())){
             //ADD TO DATABASE
+            //replace "email@email.com" with the logged in user email
+            insertGood(title.getText().toString(), date.getText().toString(), "email@email.com");
+
         }else{
             if(title.getText().toString().isEmpty()){
                 errorMessage.setText("Error: Enter a valid title.");
@@ -45,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    //populate after merging the goods db and pass to it the firebase db used in the sign in
+    public void insertGood(String title, String date, String user_email){
+        Good good = new Good(title, date, useremail);
+        //get the db connection
+        DatabaseService db = new DatabaseService(firebase);
+        db.writeGood(good);
+    }
+
     //METHODS I USE TO CHECK THE DATE ARE VALID REQUIRE THIS API PART
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean goodDate(String sdate) throws ParseException {
