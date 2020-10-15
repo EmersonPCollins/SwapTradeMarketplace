@@ -1,5 +1,7 @@
 package com.example.myfirstapp.domain;
 
+import java.util.Objects;
+
 /**
  * Represents a user of the app, used in FireBase DB
  *
@@ -64,6 +66,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean equals(User user) {
+        return this.firstName.equals(user.firstName) &&
+                this.lastName.equals(user.lastName) &&
+                this.email.equals(user.email) &&
+                this.password.equals(user.password);
     }
 
 }
