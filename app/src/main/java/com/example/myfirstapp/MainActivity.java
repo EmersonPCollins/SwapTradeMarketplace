@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         EditText date = (EditText) findViewById(R.id.dateText);
         EditText location = (EditText) findViewById(R.id.locationText);
         TextView errorMessage = (TextView) findViewById(R.id.errorMessageTextView);
-        if(!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && location.getText().toString().isEmpty() && goodDate(date.getText().toString())){
+        if(!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && !location.getText().toString().isEmpty() && goodDate(date.getText().toString())){
             //ADD TO DATABASE
             //replace "email@email.com" with the logged in user email
             insertGood(title.getText().toString(), date.getText().toString(), "email@email.com");
