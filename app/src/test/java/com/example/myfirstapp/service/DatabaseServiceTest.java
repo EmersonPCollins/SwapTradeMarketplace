@@ -71,7 +71,6 @@ public class DatabaseServiceTest {
      */
     @Test
     public void readUser() {
-
         when(mockedDatabaseRef.child(anyString())).thenReturn(mockedDatabaseRef);
         databaseSvc = new DatabaseService(mockedDatabase);
 
@@ -79,21 +78,24 @@ public class DatabaseServiceTest {
         final User mockedUser = new User("John", "Doe", "test@gmail.com", "password");
 
         doAnswer(new Answer() {
-                     @Override
-                     public Object answer(InvocationOnMock invocation) throws Throwable {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
 
-                         ValueEventListener valueEventListener = (ValueEventListener) invocation.getArguments()[0];
+                ValueEventListener valueEventListener = (ValueEventListener) invocation.getArguments()[0];
 
-                         DataSnapshot mockedDataSnapshot = Mockito.mock(DataSnapshot.class);
-                         when(mockedDataSnapshot.getValue(User.class)).thenReturn(mockedUser);
-                         valueEventListener.onDataChange(mockedDataSnapshot);
+                DataSnapshot mockedDataSnapshot = Mockito.mock(DataSnapshot.class);
+                when(mockedDataSnapshot.getValue(User.class)).thenReturn(mockedUser);
+                valueEventListener.onDataChange(mockedDataSnapshot);
 
-                         return null;
-                     }
-                 }).when(mockedDatabaseRef).addValueEventListener(any(ValueEventListener.class));
+                return null;
+            }
+        }).when(mockedDatabaseRef).addValueEventListener(any(ValueEventListener.class));
 
-        assertEquals(databaseSvc.readUser("test@gmail.com"), user);
+        User resultUser = databaseSvc.readUser("test@gmail.com");
+        assertEquals(resultUser.getEmail(), user.getEmail());
+        assertEquals(resultUser.getFirstName(), user.getFirstName());
+        assertEquals(resultUser.getLastName(), user.getLastName());
+        assertEquals(resultUser.getPassword(), user.getPassword());
 
     }
-
 }
