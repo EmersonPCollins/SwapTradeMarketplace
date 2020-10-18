@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    /*@RequiresApi(api = Build.VERSION_CODES.O)
     public void validate() throws ParseException {
         EditText title = (EditText) findViewById(R.id.titleText);
         EditText description = (EditText) findViewById(R.id.descriptionText);
@@ -74,5 +74,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
+    */
 }
