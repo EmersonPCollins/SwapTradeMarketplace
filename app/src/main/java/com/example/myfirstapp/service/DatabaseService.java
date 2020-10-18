@@ -1,7 +1,7 @@
 package com.example.myfirstapp.service;
 
 import androidx.annotation.NonNull;
-
+import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.domain.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,6 +13,7 @@ public class DatabaseService {
 
     private FirebaseDatabase database;
     private String userLocation = "users";
+    private String goodLocation = "goods";
 
     /**
      * Constructors
@@ -36,7 +37,6 @@ public class DatabaseService {
         ref.setValue(user);
     }
 
-
     public User readUser(String email) {
 
         final User[] userData = new User[1];
@@ -46,7 +46,7 @@ public class DatabaseService {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if(user != null) {
+                if (user != null) {
                     userData[0] = user;
                 }
             }
@@ -58,7 +58,16 @@ public class DatabaseService {
         });
 
         return userData[0];
-
     }
 
+    /**
+     * Used to write a good to the firebase database
+     *
+     * @param good - The good a user is adding
+     */
+    public void writeGood(Good good) {
+        DatabaseReference ref = database.getReference(goodLocation);
+
+        ref.setValue(good);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.myfirstapp.service;
 
+import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.domain.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -36,20 +37,30 @@ public class DatabaseServiceTest {
 
     private DatabaseService databaseSvc;
     private FirebaseDatabase mockedDatabase;
+    private FirebaseDatabase mockedGoodsDatabase;
     private DatabaseReference mockedDatabaseRef;
+    private DatabaseReference mockedGoodsDatabaseRef;
 
     /**
      * Set up for tests, mocks firebase database for local testing
      */
     @Before
     public void before() {
+        //users section
         mockedDatabaseRef = Mockito.mock(DatabaseReference.class);
 
         mockedDatabase = Mockito.mock(FirebaseDatabase.class);
         when(mockedDatabase.getReference("users")).thenReturn(mockedDatabaseRef);
-
         PowerMockito.mockStatic(FirebaseDatabase.class);
         when(FirebaseDatabase.getInstance()).thenReturn(mockedDatabase);
+
+        //goods section
+        mockedGoodsDatabaseRef = Mockito.mock(DatabaseReference.class);
+
+        mockedGoodsDatabase = Mockito.mock(FirebaseDatabase.class);
+        when(mockedGoodsDatabase.getReference("goods")).thenReturn(mockedGoodsDatabaseRef);
+        PowerMockito.mockStatic(FirebaseDatabase.class);
+        when(FirebaseDatabase.getInstance()).thenReturn(mockedGoodsDatabase);
     }
 
 
@@ -67,6 +78,19 @@ public class DatabaseServiceTest {
     }
 
     /**
+     * Tests that you can save a good to the db
+     */
+    @Test
+    public void writeGood() {
+        databaseSvc = new DatabaseService(mockedGoodsDatabase);
+
+        Good good = new Good("art statue", "02-nov-21", "test@gmail.com");
+        databaseSvc.writeGood(good);
+
+        verify(mockedGoodsDatabaseRef, times(1)).setValue(good);
+    }
+
+     /**
      * Tests that you can read a user from db
      */
     @Test
