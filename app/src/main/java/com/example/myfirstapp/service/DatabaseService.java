@@ -37,6 +37,12 @@ public class DatabaseService {
         ref.setValue(user);
     }
 
+    /**
+     * Reads user from db
+     *
+     * @param email - email of user
+     * @return User or null
+     */
     public User readUser(String email) {
 
         final User[] userData = new User[1];
@@ -69,5 +75,22 @@ public class DatabaseService {
         DatabaseReference ref = database.getReference(goodLocation);
 
         ref.setValue(good);
+    }
+
+    /**
+     * Check that a user exists in db given login details
+     */
+    public boolean userExists(String email, String password) {
+        User user = readUser(email);
+
+        if (!user.getEmail().equals(email)) {
+            return false;
+        }
+
+        if (!user.getPassword().equals(password)) {
+            return false;
+        }
+
+        return true;
     }
 }

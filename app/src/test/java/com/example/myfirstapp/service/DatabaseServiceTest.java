@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import static org.mockito.Mockito.*;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -21,6 +20,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
@@ -91,7 +92,7 @@ public class DatabaseServiceTest {
         verify(mockedGoodsDatabaseRef, times(1)).setValue(good);
     }
 
-     /**
+    /**
      * Tests that you can read a user from db
      */
     @Test
@@ -122,5 +123,91 @@ public class DatabaseServiceTest {
         assertEquals(resultUser.getLastName(), user.getLastName());
         assertEquals(resultUser.getPassword(), user.getPassword());
 
+    }
+
+    /**
+     * Tests that a user exists in a database
+     */
+    @Test
+    public void userExists() {
+
+        when(mockedDatabaseRef.child(anyString())).thenReturn(mockedDatabaseRef);
+        databaseSvc = new DatabaseService(mockedDatabase);
+
+        final User mockedUser = new User("John", "Doe", "test@gmail.com", "password");
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+
+                ValueEventListener valueEventListener = (ValueEventListener) invocation.getArguments()[0];
+
+                DataSnapshot mockedDataSnapshot = Mockito.mock(DataSnapshot.class);
+                when(mockedDataSnapshot.getValue(User.class)).thenReturn(mockedUser);
+                valueEventListener.onDataChange(mockedDataSnapshot);
+
+                return null;
+            }
+        }).when(mockedDatabaseRef).addValueEventListener(any(ValueEventListener.class));
+
+        assertTrue(databaseSvc.userExists("test@gmail.com", "password"));
+    }
+
+    /**
+     * Test that an incorrect email shows that no user exists
+     */
+    @Test
+    public void failedEmailUserExists() {
+
+        when(mockedDatabaseRef.child(anyString())).thenReturn(mockedDatabaseRef);
+        databaseSvc = new DatabaseService(mockedDatabase);
+
+        final User mockedUser = new User("John", "Doe", "test@gmail.com", "password");
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+
+                ValueEventListener valueEventListener = (ValueEventListener) invocation.getArguments()[0];
+
+                DataSnapshot mockedDataSnapshot = Mockito.mock(DataSnapshot.class);
+                when(mockedDataSnapshot.getValue(User.class)).thenReturn(mockedUser);
+                valueEventListener.onDataChange(mockedDataSnapshot);
+
+                return null;
+            }
+        }).when(mockedDatabaseRef).addValueEventListener(any(ValueEventListener.class));
+
+        System.out.println(databaseSvc.readUser("nope@gmail.com").getEmail());
+        assertFalse(databaseSvc.userExists("nope@gmail.com", "password"));
+
+    }
+
+    /**
+     * Test that a incorrect password shows that a user doesn't exist
+     */
+    @Test
+    public void failedPasswordUserExists() {
+
+        when(mockedDatabaseRef.child(anyString())).thenReturn(mockedDatabaseRef);
+        databaseSvc = new DatabaseService(mockedDatabase);
+
+        final User mockedUser = new User("John", "Doe", "test@gmail.com", "password");
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+
+                ValueEventListener valueEventListener = (ValueEventListener) invocation.getArguments()[0];
+
+                DataSnapshot mockedDataSnapshot = Mockito.mock(DataSnapshot.class);
+                when(mockedDataSnapshot.getValue(User.class)).thenReturn(mockedUser);
+                valueEventListener.onDataChange(mockedDataSnapshot);
+
+                return null;
+            }
+        }).when(mockedDatabaseRef).addValueEventListener(any(ValueEventListener.class));
+
+        assertFalse(databaseSvc.userExists("test@gmail.com", "failed"));
     }
 }
