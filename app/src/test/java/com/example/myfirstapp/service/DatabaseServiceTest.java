@@ -20,6 +20,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
@@ -120,6 +121,19 @@ public class DatabaseServiceTest {
         assertEquals(resultUser.getFirstName(), user.getFirstName());
         assertEquals(resultUser.getLastName(), user.getLastName());
         assertEquals(resultUser.getPassword(), user.getPassword());
+
+    }
+
+    /**
+     * Tests that a user exists in a database
+     */
+    @Test
+    public void userExistsTest() {
+
+        User mockedUser = new User("John", "Doe", "test@gmail.com", "password")
+        when(databaseSvc.readUser("test@gmail.com")).thenReturn(mockedUser);
+
+        assertTrue(databaseSvc.userExists("test@gmail.com", "password"));
 
     }
 }
