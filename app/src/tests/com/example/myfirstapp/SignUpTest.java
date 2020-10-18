@@ -7,10 +7,10 @@ import static org.junit.Assert.*;
 
 public class SignUpTest {
     // Test Data
-    String firstName = "Anne";
-    String lastName = "Droid";
-    String email = "anned@studio.com";
-    String password = "apple";
+    public static final String firstName = "Anne";
+    public static final String lastName = "Droid";
+    public static final String email = "anned@studio.com";
+    public static final String password = "apple";
     User user;
 
     // Assumes that creating a user will create an account
@@ -21,33 +21,29 @@ public class SignUpTest {
 
     @Test
     public void testNewUserCanSignUp() {
-        assertEquals(user.getFirstName(), this.firstName);
-        assertEquals(user.getLastName(), this.lastName);
-        assertEquals(user.getEmail(), this.email);
-        assertEquals(user.getPassword(), this.password);
+        assertEquals(user.getFirstName(),"Anne" );
+        assertEquals(user.getLastName(), "Droid");
+        assertEquals(user.getEmail(), "anned@studio.com");
+        assertEquals(user.getPassword(), "apple");
     }
 
 
     // Checks that a user cannot sign up with an existing email
     @Test
-    public void testExistingUserCannotSignUp() {
+    public void testExistingUserCannotSignUp() throws Exception {
         boolean userCannotSignUp = false;
         User existingUser = new User(firstName, lastName, email, password);
-        try {
-            existingUser.getEmail();
-        }
-        catch(NullPointerException e) {
+        if(existingUser.getEmail().equals(user.getEmail())) {
             userCannotSignUp = true;
+            throw new Exception("User Exists already is" + userCannotSignUp);
         }
-
-        assertTrue(userCannotSignUp);
     }
 
 
     @After
     public void tearDown() throws Exception {
         user.deleteAccount();
-        user = null;
+        assertNull(user.getFirstName());
     }
 
 }

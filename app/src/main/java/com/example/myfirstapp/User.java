@@ -30,5 +30,9 @@ public class User {
     }
 
     public void deleteAccount(){
+        this.firstName = null;
+        this.lastName = null;
+        this.email = null;
+        this.password = null;
     }
 }
