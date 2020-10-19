@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public void insertGood(String title, String date, String user_email){
         Good good = new Good(title, date, user_email);
         //get the db connection
-        DatabaseService db = new DatabaseService(firebase);
+        DatabaseService db = new DatabaseService();
         db.writeGood(good);
     }
 
