@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     //populate after merging the goods db and pass to it the firebase db used in the sign in
     public void insertGood(String title, String date, String user_email){
-        Good good = new Good(title, date, useremail);
+        Good good = new Good(title, date, user_email);
         //get the db connection
         DatabaseService db = new DatabaseService(firebase);
         db.writeGood(good);
