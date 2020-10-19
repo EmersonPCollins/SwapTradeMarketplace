@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Barter Trader</string>
+    <string name="app_name">My First App</string>
+
+    <string-array name="categories">
+        <item>Art</item>
+        <item>Baby Items</item>
+        <item>Bikes</item>
+        <item>Books</item>
+        <item>Electronics</item>
+        <item>Exercise Equipment</item>
+        <item>Furniture</item>
+        <item>Hobbies and Crafts</item>
+        <item>Home Appliances</item>
+        <item>Jewellery and Watches</item>
+        <item>Musical Instruments</item>
+        <item>Phones</item>
+        <item>Tickets</item>
+        <item>Toys</item>
+        <item>Video Games and Consoles</item>
+    </string-array>
 </resources>
