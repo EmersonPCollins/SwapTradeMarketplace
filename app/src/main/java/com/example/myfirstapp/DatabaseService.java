@@ -1,12 +1,13 @@
 package com.example.myfirstapp;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class DatabaseService {
-    private FirebaseDatabase databaseReference;
+    private DatabaseReference db;
 
-    DatabaseService(FirebaseDatabase firebase){
-            databaseReference = firebase;
+    DatabaseService(){
+        db = FirebaseDatabase.getInstance().getReference();
     }
 
     public void writeGood(Good good){
