@@ -6,9 +6,9 @@ import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static androidx.test.espresso.assertion.ViewAssertions.*;
 
-public class GoodsDetailsTest {​​​​​​​​
+public class GoodsDetailsTest {
     @Test
-    public void testEmptyTitle(){​​​​​​​​
+    public void testEmptyTitle() {
         onView(withId(R.id.titleText))
                 .perform(click())
                 .perform(typeText(""));
@@ -16,9 +16,9 @@ public class GoodsDetailsTest {​​​​​​​​
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a valid title.")));
-    }​​​​​​​​
+    }
     @Test
-    public void testEmptyDescription(){​​​​​​​​
+    public void testEmptyDescription() {
         onView(withId(R.id.descriptionText))
                 .perform(click())
                 .perform(typeText(""));
@@ -26,9 +26,10 @@ public class GoodsDetailsTest {​​​​​​​​
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a description.")));
-    }​​​​​​​​
+    }
+
     @Test
-    public void testBadDate(){​​​​​​​​
+    public void badTestDate() {
         onView(withId(R.id.dateText))
                 .perform(click())
                 .perform(typeText(""));
@@ -43,9 +44,9 @@ public class GoodsDetailsTest {​​​​​​​​
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a valid date.")));
-    }​​​​​​​​
+    }
     @Test
-    public void testEmptyLocation(){​​​​​​​​
+    public void testEmptyLocation() {
         onView(withId(R.id.locationText))
                 .perform(click())
                 .perform(typeText(""));
@@ -53,9 +54,9 @@ public class GoodsDetailsTest {​​​​​​​​
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a location.")));
-    }​​​​​​​​
+    }
     @Test
-    public void testValidDetails() {​​​​​​​​
+    public void testValidDetails() {
         onView(withId(R.id.titleText))
                 .perform(click())
                 .perform(typeText("My Title"));
@@ -72,8 +73,5 @@ public class GoodsDetailsTest {​​​​​​​​
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("")));
-    }​​​​​​​​
-}​​​​​​​​
-
-
-
+    }
+}

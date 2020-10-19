@@ -7,8 +7,11 @@
     tools:context=".GoodsActivity">
 
     <TextView
-        android:layout_width=""
-        android:layout_height=""
+        android:id="@+id/errorMessageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text='""' />
+
 
     <EditText
         android:id="@+id/titleText"
