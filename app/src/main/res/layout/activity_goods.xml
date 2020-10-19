@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".GoodsActivity">
 
+    <TextView
+        android:layout_width=""
+        android:layout_height=""
 
     <EditText
         android:id="@+id/titleText"
@@ -28,7 +31,7 @@
         android:entries="@array/categories"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/categoriesTitle"
-        app:layout_constraintTop_toBottomOf="@+id/adTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
     <EditText
         android:id="@+id/descriptionText"
@@ -40,10 +43,10 @@
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoriesSpinner"
-        app:layout_constraintVertical_bias="0.221" />
+        app:layout_constraintVertical_bias="0.487" />
 
     <TextView
         android:id="@+id/categoriesTitle"
@@ -56,10 +59,10 @@
         app:layout_constraintEnd_toStartOf="@+id/categoriesSpinner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
     <Button
-        android:id="@+id/postAd"
+        android:id="@+id/submitGoodButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post Your Ad"
@@ -68,6 +71,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.853" />
+
+    <EditText
+        android:id="@+id/locationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Location"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="234dp" />
+
+    <EditText
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="57dp"
+        tools:layout_editor_absoluteY="299dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
