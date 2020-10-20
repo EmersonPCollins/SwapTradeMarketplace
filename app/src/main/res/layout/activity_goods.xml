@@ -6,12 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".GoodsActivity">
 
+
     <TextView
-        android:id="@+id/errorMessageTextView"
+        android:text="Some text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='""' />
-
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/errorMessageTextView" />
 
     <EditText
         android:id="@+id/titleText"
@@ -53,14 +58,13 @@
 
     <TextView
         android:id="@+id/categoriesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="67dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="28dp"
         android:text="Category:"
         android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/categoriesSpinner"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
@@ -72,27 +76,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.853" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionText"
+        android:onClick="onSubmit"
+        />
+
 
     <EditText
         android:id="@+id/locationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Location"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="234dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.283"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoriesTitle" />
 
     <EditText
         android:id="@+id/dateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="57dp"
+        android:layout_marginLeft="57dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="19dp"
         android:ems="10"
         android:hint="Date"
         android:inputType="date"
-        tools:layout_editor_absoluteX="57dp"
-        tools:layout_editor_absoluteY="299dp" />
+        app:layout_constraintBottom_toTopOf="@+id/descriptionText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
