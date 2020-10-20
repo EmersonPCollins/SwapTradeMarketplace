@@ -1,12 +1,20 @@
 package com.example.myfirstapp;
+import android.app.Activity;
+
 import org.junit.Rule;
 import org.junit.Test;
 import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static androidx.test.espresso.assertion.ViewAssertions.*;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 public class GoodsDetailsTest {
+
+    @Rule
+    public ActivityScenarioRule<GoodsActivity> activityScenarioRule
+            = new ActivityScenarioRule<>(GoodsActivity.class);
+
     @Test
     public void testEmptyTitle() {
         onView(withId(R.id.titleText))
