@@ -48,6 +48,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         TextView errorMessage = (TextView) findViewById(R.id.errorMessageTextView);
         errorMessage.setText("Now I'm changed!");
     }
+
     /**
      *
      * To be examined

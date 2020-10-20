@@ -28,6 +28,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.6.2'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.2'
+    testImplementation 'org.powermock:powermock-module-junit4:1.6.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
 }
