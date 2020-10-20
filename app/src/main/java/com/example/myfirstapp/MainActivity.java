@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods);
+        setContentView(R.layout.activity_main);
 
-        button = (Button) findViewById(R.id.nextPg);
+        button = (Button) findViewById(R.id.goodsPg);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
