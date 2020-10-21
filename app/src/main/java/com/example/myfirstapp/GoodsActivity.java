@@ -26,7 +26,6 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private EditText locationText;
     private EditText descriptionText;
     private TextView errorMessage;
-    protected int numOfSubmits = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,60 +58,44 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     // Basic error handling below, refactoring needed here, in the test and in UI
-    private boolean validateTitle(){
+    private void validateTitle(){
         String titleInput = titleText.getText().toString().trim();
         if(titleInput.isEmpty()) {
             errorMessage.setText("Error: Enter a valid title.");
-            return false;
         }
-        else {
-            errorMessage.setText(null);
-            return true;
-        }
+
     }
 
-    private boolean validateLocation(){
+    private void validateLocation(){
         String locationInput = locationText.getText().toString().trim();
         if(locationInput.isEmpty()) {
             errorMessage.setText("Error: Enter a location.");
-            return false;
-        }
-        else {
-            errorMessage.setText(null);
-            return true;
         }
     }
 
-    private boolean validateDate(){
+    private void validateDate(){
         String dateInput = dateText.getText().toString().trim();
         if(dateInput.isEmpty()) {
             errorMessage.setText("Error: Enter a valid date.");
-            return false;
-        }
-        else {
-            errorMessage.setText(null);
-            return true;
         }
     }
 
-    private boolean validateDescription(){
+    private void validateDescription(){
         String descriptionInput = descriptionText.getText().toString().trim();
         if(descriptionInput.isEmpty()) {
             errorMessage.setText("Error: Enter a description.");
-            return false;
         }
-        else {
-            errorMessage.setText(null);
-            return true;
-        }
+
     }
 
     public void onSubmit(View view) {
-        numOfSubmits++;
+        errorMessage.setText(null);
 
-        if(numOfSubmits > 1) {
-            errorMessage.setText(null);
-        }
+        // gets the text and removes surrounding whitespace
+        // if the input is empty it sets the error message
+        // if the input is not empty it sets the error message to null
+        // thus the error message gets set to null when the last one is called and if it passes.
+        // either I can have several error messages, or if
         validateTitle();
         validateLocation();
         validateDate();
