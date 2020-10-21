@@ -58,10 +58,10 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+    // Basic error handling below, refactoring needed here, in the test and in UI
     private boolean validateTitle(){
         String titleInput = titleText.getText().toString().trim();
         if(titleInput.isEmpty()) {
-//            String str = errorMessage.getText().toString();
             errorMessage.setText("Error: Enter a valid title.");
             return false;
         }
@@ -74,7 +74,6 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private boolean validateLocation(){
         String locationInput = locationText.getText().toString().trim();
         if(locationInput.isEmpty()) {
-//            String str = errorMessage.getText().toString();
             errorMessage.setText("Error: Enter a location.");
             return false;
         }
@@ -87,7 +86,6 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private boolean validateDate(){
         String dateInput = dateText.getText().toString().trim();
         if(dateInput.isEmpty()) {
-//            String str = errorMessage.getText().toString();
             errorMessage.setText("Error: Enter a valid date.");
             return false;
         }
@@ -100,7 +98,6 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private boolean validateDescription(){
         String descriptionInput = descriptionText.getText().toString().trim();
         if(descriptionInput.isEmpty()) {
-//            String str = errorMessage.getText().toString();
             errorMessage.setText("Error: Enter a description.");
             return false;
         }
