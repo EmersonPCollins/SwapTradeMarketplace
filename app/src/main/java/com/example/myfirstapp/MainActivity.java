@@ -27,13 +27,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button) findViewById(R.id.goodsPg);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                nextPage();
-            }
-        });
     }
 
     public boolean credentialsCheck(String firstname, String lastname, String email, String password, @NonNull DataSnapshot dataSnapshot){
@@ -46,12 +39,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
-    public void nextPage() {
-         Intent intent = new Intent(this, GoodsActivity.class);
-         startActivity(intent);
-    }
-
 
 }
 
