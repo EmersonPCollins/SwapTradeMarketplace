@@ -84,7 +84,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../app/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../app/src/test/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../app/src/test/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../app/src/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/../../../app/build" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
