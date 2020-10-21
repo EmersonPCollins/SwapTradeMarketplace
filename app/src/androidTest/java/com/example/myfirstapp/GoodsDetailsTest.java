@@ -80,13 +80,15 @@ public class GoodsDetailsTest {
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a valid date.")));
+
         onView(withId(R.id.dateText))
                 .perform(click())
-                .perform(typeText("1/1/2020"), closeSoftKeyboard());
+                .perform(typeText("1/11/2020"), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a valid date.")));
+
     }
     @Test
     public void testEmptyLocation() {
