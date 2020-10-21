@@ -73,9 +73,11 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void validateDate(){
         String dateInput = dateText.getText().toString().trim();
-        if(dateInput.isEmpty()) {
+        boolean goodDate = goodDate(dateInput);
+        if(!goodDate) {
             errorMessage.setText("Error: Enter a valid date.");
         }
     }
@@ -88,14 +90,9 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onSubmit(View view) {
         errorMessage.setText(null);
-
-        // gets the text and removes surrounding whitespace
-        // if the input is empty it sets the error message
-        // if the input is not empty it sets the error message to null
-        // thus the error message gets set to null when the last one is called and if it passes.
-        // either I can have several error messages, or if
         validateTitle();
         validateLocation();
         validateDate();
@@ -108,6 +105,18 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
  */
     }
 
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        private boolean goodDate(String sdate) {
+            if(sdate.isEmpty()){
+                return false;
+            }
+            if(!sdate.matches("^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)\\d{4}$")){
+                return false;
+            }
+
+            return true;
+        }
 
 
 
