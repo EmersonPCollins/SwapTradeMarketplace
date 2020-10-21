@@ -13,11 +13,20 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class GoodsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private EditText titleText;
+    private EditText dateText;
+    private EditText locationText;
+    private EditText descriptionText;
+    private TextView errorMessage;
+    protected int numOfSubmits = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +40,11 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(this);
+        titleText = findViewById(R.id.titleText);
+        dateText = findViewById(R.id.dateText);
+        locationText = findViewById(R.id.locationText);
+        descriptionText = findViewById(R.id.descriptionText);
+        errorMessage = (TextView) findViewById(R.id.errorMessageTextView);
     }
 
     // Currently this saves the text of the selected category
@@ -44,10 +58,79 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-    public void onSubmit(View view) {
-        TextView errorMessage = (TextView) findViewById(R.id.errorMessageTextView);
-        errorMessage.setText("Now I'm changed!");
+    private boolean validateTitle(){
+        String titleInput = titleText.getText().toString().trim();
+        if(titleInput.isEmpty()) {
+//            String str = errorMessage.getText().toString();
+            errorMessage.setText("Error: Enter a valid title.");
+            return false;
+        }
+        else {
+            errorMessage.setText(null);
+            return true;
+        }
     }
+
+    private boolean validateLocation(){
+        String locationInput = locationText.getText().toString().trim();
+        if(locationInput.isEmpty()) {
+//            String str = errorMessage.getText().toString();
+            errorMessage.setText("Error: Enter a location.");
+            return false;
+        }
+        else {
+            errorMessage.setText(null);
+            return true;
+        }
+    }
+
+    private boolean validateDate(){
+        String dateInput = dateText.getText().toString().trim();
+        if(dateInput.isEmpty()) {
+//            String str = errorMessage.getText().toString();
+            errorMessage.setText("Error: Enter a valid date.");
+            return false;
+        }
+        else {
+            errorMessage.setText(null);
+            return true;
+        }
+    }
+
+    private boolean validateDescription(){
+        String descriptionInput = descriptionText.getText().toString().trim();
+        if(descriptionInput.isEmpty()) {
+//            String str = errorMessage.getText().toString();
+            errorMessage.setText("Error: Enter a description.");
+            return false;
+        }
+        else {
+            errorMessage.setText(null);
+            return true;
+        }
+    }
+
+    public void onSubmit(View view) {
+        numOfSubmits++;
+
+        if(numOfSubmits > 1) {
+            errorMessage.setText(null);
+        }
+        validateTitle();
+        validateLocation();
+        validateDate();
+        validateDescription();
+/*
+        if(!validateTitle() | !validateLocation() | !validateDate() | !validateDescription()) {
+             return;
+        }
+
+ */
+    }
+
+
+
+
 
     /**
      *
