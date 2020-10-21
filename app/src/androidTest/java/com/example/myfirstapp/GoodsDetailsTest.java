@@ -22,6 +22,16 @@ public class GoodsDetailsTest {
 
     @Test
     public void testEmptyTitle() {
+        onView(withId(R.id.locationText))
+                .perform(click())
+                .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
+        onView(withId(R.id.dateText))
+                .perform(click())
+                .perform(typeText("01/11/2020"), closeSoftKeyboard());
+        onView(withId(R.id.descriptionText))
+                .perform(click(), closeSoftKeyboard())
+                .perform(typeText("My Description"));
+
         onView(withId(R.id.titleText))
                 .perform(click())
                 .perform(typeText(""), closeSoftKeyboard());
@@ -32,6 +42,16 @@ public class GoodsDetailsTest {
     }
     @Test
     public void testEmptyDescription() {
+        onView(withId(R.id.titleText))
+                .perform(click())
+                .perform(typeText("My Title"), closeSoftKeyboard());
+        onView(withId(R.id.locationText))
+                .perform(click())
+                .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
+        onView(withId(R.id.dateText))
+                .perform(click())
+                .perform(typeText("01/11/2020"), closeSoftKeyboard());
+
         onView(withId(R.id.descriptionText))
                 .perform(click())
                 .perform(typeText(""), closeSoftKeyboard());
@@ -43,6 +63,16 @@ public class GoodsDetailsTest {
 
     @Test
     public void badTestDate() {
+        onView(withId(R.id.titleText))
+                .perform(click())
+                .perform(typeText("My Title"), closeSoftKeyboard());
+        onView(withId(R.id.locationText))
+                .perform(click())
+                .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
+        onView(withId(R.id.descriptionText))
+                .perform(click(), closeSoftKeyboard())
+                .perform(typeText("My Description"), closeSoftKeyboard());
+
         onView(withId(R.id.dateText))
                 .perform(click())
                 .perform(typeText(""), closeSoftKeyboard());
@@ -60,6 +90,16 @@ public class GoodsDetailsTest {
     }
     @Test
     public void testEmptyLocation() {
+        onView(withId(R.id.titleText))
+                .perform(click())
+                .perform(typeText("My Title"), closeSoftKeyboard());
+        onView(withId(R.id.dateText))
+                .perform(click())
+                .perform(typeText("01/11/2020"), closeSoftKeyboard());
+        onView(withId(R.id.descriptionText))
+                .perform(click(), closeSoftKeyboard())
+                .perform(typeText("My Description"), closeSoftKeyboard());
+
         onView(withId(R.id.locationText))
                 .perform(click())
                 .perform(typeText(""), closeSoftKeyboard());
