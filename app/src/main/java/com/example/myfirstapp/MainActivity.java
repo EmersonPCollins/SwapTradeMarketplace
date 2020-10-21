@@ -27,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button login = findViewById(R.id.loginButton);
+        login.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), HomeActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+
+        });
     }
 
     public boolean credentialsCheck(String firstname, String lastname, String email, String password, @NonNull DataSnapshot dataSnapshot){
