@@ -3,6 +3,7 @@ package com.example.myfirstapp;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +45,15 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         locationText = findViewById(R.id.locationText);
         descriptionText = findViewById(R.id.descriptionText);
         errorMessage = (TextView) findViewById(R.id.errorMessageTextView);
+
+        Button submit = (Button) findViewById(R.id.submitGoodButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View view) {
+                onSubmitClicked(view);
+            }
+
+        });
     }
 
     // Currently this saves the text of the selected category
@@ -97,7 +107,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void onSubmit(View view) {
+    public void onSubmitClicked(View view) {
         errorMessage.setText(null);
         validateTitle();
         validateLocation();
