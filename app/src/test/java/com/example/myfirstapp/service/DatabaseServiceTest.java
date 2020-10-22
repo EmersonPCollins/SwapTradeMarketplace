@@ -1,4 +1,4 @@
-
+/**
 package com.example.myfirstapp.service;
 
 import com.example.myfirstapp.domain.Good;
@@ -196,3 +196,4 @@ public class DatabaseServiceTest {
         assertFalse(databaseSvc.userExists("test@gmail.com", "failed"));
     }
 }
+**/
