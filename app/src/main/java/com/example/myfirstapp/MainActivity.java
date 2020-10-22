@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myfirstapp.service.DatabaseService;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.example.myfirstapp.Activity.HomeActivity;
+
 /**
  * MainActivity is the login page of the app
  */

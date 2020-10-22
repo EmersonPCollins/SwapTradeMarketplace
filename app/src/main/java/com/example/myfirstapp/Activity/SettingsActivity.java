@@ -1,19 +1,13 @@
-package com.example.myfirstapp;
+package com.example.myfirstapp.Activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import com.example.myfirstapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
     @Override

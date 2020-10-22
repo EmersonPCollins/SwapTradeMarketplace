@@ -1,9 +1,5 @@
 package com.example.myfirstapp;
-import android.app.Activity;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import static androidx.test.espresso.Espresso.onView;
@@ -11,8 +7,9 @@ import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static androidx.test.espresso.assertion.ViewAssertions.*;
 
-import androidx.test.espresso.ViewAction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+
+import com.example.myfirstapp.Activity.GoodsActivity;
 
 public class GoodsDetailsTest {
 

@@ -1,8 +1,10 @@
-package com.example.myfirstapp;
+package com.example.myfirstapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.myfirstapp.R;
 
 /**
  * Home page of app, shown after a user has logged in
