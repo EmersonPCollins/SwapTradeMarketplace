@@ -1,22 +1,18 @@
 package com.example.myfirstapp;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
+/**
+ * Page where you submit a good to trade
+ */
 public class GoodsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     @Override
