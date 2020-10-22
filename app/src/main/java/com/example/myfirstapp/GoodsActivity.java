@@ -58,36 +58,42 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     // Basic error handling below, refactoring needed here, in the test and in UI
-    private void validateTitle(){
+    private boolean validateTitle(){
         String titleInput = titleText.getText().toString().trim();
         if(titleInput.isEmpty()) {
             errorMessage.setText("Error: Enter a valid title.");
+            return false;
         }
-
+    return true;
     }
 
-    private void validateLocation(){
+    private boolean validateLocation(){
         String locationInput = locationText.getText().toString().trim();
         if(locationInput.isEmpty()) {
             errorMessage.setText("Error: Enter a location.");
+            return false;
         }
+        return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void validateDate(){
+    private boolean validateDate(){
         String dateInput = dateText.getText().toString().trim();
         boolean goodDate = goodDate(dateInput);
         if(!goodDate) {
             errorMessage.setText("Error: Enter a valid date.");
+            return false;
         }
+        return true;
     }
 
-    private void validateDescription(){
+    private boolean validateDescription(){
         String descriptionInput = descriptionText.getText().toString().trim();
         if(descriptionInput.isEmpty()) {
             errorMessage.setText("Error: Enter a description.");
+            return false;
         }
-
+        return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -97,12 +103,11 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         validateLocation();
         validateDate();
         validateDescription();
-/*
-        if(!validateTitle() | !validateLocation() | !validateDate() | !validateDescription()) {
-             return;
+
+        if(validateTitle() && validateLocation() && validateDate() && validateDescription()) {
+            //insertGood(title.getText().toString(), date.getText().toString(), "email@email.com");
         }
 
- */
     }
 
 
@@ -117,6 +122,13 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
             return true;
         }
+
+    public void insertGood(String title, String date, String user_email){
+        Good good = new Good(title, date, user_email);
+        //get the db connection
+        DatabaseService db = new DatabaseService();
+        db.writeGood(good);
+    }
 
 
 
