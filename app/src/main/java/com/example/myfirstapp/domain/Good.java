@@ -8,6 +8,7 @@ public class Good {
 
     private String title;
     private String description;
+    private String date;
     private String availability_date;
     private String used_duration;
     private String current_state;
@@ -20,8 +21,11 @@ public class Good {
      * @param title - title of the good
      * @param availability_date - the date of which the good is available for exchange
      */
-    public Good(String title, String availability_date, String user_email){
+    public Good(String title, String date, String description, String exchange_location, String user_email){
         this.title = title;
+        this.date = date;
+        this.description = description;
+        this.exchange_location = exchange_location;
         this.availability_date = availability_date;
         this.user_email = user_email;
     }

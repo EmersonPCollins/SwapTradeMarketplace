@@ -9,9 +9,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-/**
- * DatabaseService handles the firebase database
- */
 public class DatabaseService {
 
     private FirebaseDatabase database;
@@ -23,6 +20,10 @@ public class DatabaseService {
      */
     public DatabaseService(FirebaseDatabase database) {
         this.database = database;
+    }
+
+    public DatabaseService() {
+        this.database = FirebaseDatabase.getInstance();
     }
 
     /**
@@ -78,9 +79,6 @@ public class DatabaseService {
 
     /**
      * Check that a user exists in db given login details
-     *
-     * @param email email of user
-     * @param password password of user
      */
     public boolean userExists(String email, String password) {
         User user = readUser(email);
