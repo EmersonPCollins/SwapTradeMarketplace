@@ -1,4 +1,4 @@
-package com.example.myfirstapp;
+package com.example.myfirstapp.Activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import com.example.myfirstapp.domain.*;
+import com.example.myfirstapp.R;
+import com.example.myfirstapp.domain.Good;
+import com.example.myfirstapp.service.DatabaseService;
 
 public class GoodsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 

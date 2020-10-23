@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".GoodsActivity"/>
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".Activity.HomeActivity"/>
+        <activity android:name=".Activity.GoodsActivity"/>
+        <activity android:name=".Activity.SettingsActivity"/>
     </application>
 
 </manifest>
