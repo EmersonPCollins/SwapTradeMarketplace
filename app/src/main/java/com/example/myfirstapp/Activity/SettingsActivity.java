@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myfirstapp.Activity.HomeActivity;
 import com.example.myfirstapp.R;
 
 public class SettingsActivity extends AppCompatActivity {

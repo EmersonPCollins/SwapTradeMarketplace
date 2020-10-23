@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">My First App</string>
+    <string name="email">email</string>
+    <string name="firstPassword">password</string>
+    <string name="confirmPassword">confirm password</string>
+    <string name="registraButton">register</string>
+    <string name="error"></string>
+    <string name="firstName">first name</string>
+    <string name="lastName">last name</string>
 
     <string-array name="categories">
         <item>Art</item>

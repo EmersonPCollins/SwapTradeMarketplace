@@ -1,6 +1,6 @@
-
+/**
 package com.example.myfirstapp.service;
-/*
+
 import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.domain.User;
 import com.google.firebase.database.DataSnapshot;
@@ -196,4 +196,4 @@ public class DatabaseServiceTest {
         assertFalse(databaseSvc.userExists("test@gmail.com", "failed"));
     }
 }
-*/
+**/

@@ -62,7 +62,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
             errorMessage.setText("Error: Enter a valid title.");
             return false;
         }
-    return true;
+        return true;
     }
 
     private boolean validateLocation(String locationInput){
@@ -106,17 +106,17 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        private boolean goodDate(String sdate) {
-            if(sdate.isEmpty()){
-                return false;
-            }
-            if(!sdate.matches("^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)\\d{4}$")){
-                return false;
-            }
-
-            return true;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean goodDate(String sdate) {
+        if(sdate.isEmpty()){
+            return false;
         }
+        if(!sdate.matches("^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)\\d{4}$")){
+            return false;
+        }
+
+        return true;
+    }
 
     public void insertGood(String title, String date, String description, String location, String email){
         Good good = new Good(title, date, description, location, email);

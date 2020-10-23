@@ -83,6 +83,10 @@ public class DatabaseService {
     public boolean userExists(String email, String password) {
         User user = readUser(email);
 
+        if (user == null) {
+            return false;
+        }
+
         if (!user.getEmail().equals(email)) {
             return false;
         }
