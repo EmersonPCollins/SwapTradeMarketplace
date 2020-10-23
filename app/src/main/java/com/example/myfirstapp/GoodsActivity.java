@@ -102,8 +102,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         String locationInput = locationText.getText().toString().trim();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(dateInput) && validateDescription(descriptionInput)) {
-            //when the user is logged in this variable must be replaced
-            insertGood(titleInput, dateInput, descriptionInput, locationInput, "email@example.com");
+            insertGood(titleInput, dateInput, descriptionInput, locationInput);
         }
 
     }
@@ -121,8 +120,8 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
             return true;
         }
 
-    public void insertGood(String title, String date, String description, String location, String email){
-        Good good = new Good(title, date, description, location, email);
+    public void insertGood(String title, String date, String description, String location){
+        Good good = new Good(title, date, description, location);
         //get the db connection
         DatabaseService db = new DatabaseService();
         db.writeGood(good);
