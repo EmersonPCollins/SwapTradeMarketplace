@@ -1,5 +1,6 @@
 package com.example.myfirstapp.Activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -49,11 +50,17 @@ public class RegistraActivity extends AppCompatActivity {
         if(!fName.isEmpty() && !lName.isEmpty() && validEmail(email) && validPass(stPass) && stPass.equals(ndPass)){
             User user = new User(fName, lName, email, stPass);
             //Database connection here
+            goToHome();
         }else{
             TextView error_et = (TextView) findViewById(R.id.errorText);
             error_et.setText("invalid input");
         }
 
+    }
+
+    private void goToHome() {
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
     }
 
     private boolean validEmail(String email) {

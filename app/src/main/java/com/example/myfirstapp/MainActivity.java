@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myfirstapp.Activity.RegistraActivity;
 import com.example.myfirstapp.service.DatabaseService;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText emailText = findViewById(R.id.emailField);
         final EditText passwordText = findViewById(R.id.passwordField);
         final Button loginButton = findViewById(R.id.loginButton);
+        final Button registerButton = findViewById(R.id.newRegisterButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegistraActivity.class);
+                startActivity(intent);
             }
         });
     }
