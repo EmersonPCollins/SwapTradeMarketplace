@@ -25,7 +25,7 @@ public class RegistraActivity extends AppCompatActivity {
     EditText email_et;
     EditText stPass_et;
     EditText ndPass_et;
-    TextView error_tv = findViewById(R.id.errorMessageView);;
+    TextView error_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class RegistraActivity extends AppCompatActivity {
         email_et = findViewById(R.id.email);
         stPass_et = findViewById(R.id.first_password);
         ndPass_et = findViewById(R.id.second_password);
+        error_tv = findViewById(R.id.errorMessageView);
 
         String fName = fName_et.getText().toString();
         String lName = lName_et.getText().toString();
