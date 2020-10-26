@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!databaseService.userExists(email, password)) {
                     SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
-                    preference.edit().putString("email", email).apply();
+                    preference.edit().putString("email", "fake@email.com").apply();
 
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
