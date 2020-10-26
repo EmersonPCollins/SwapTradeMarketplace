@@ -20,6 +20,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class RegistraActivity extends AppCompatActivity {
+    EditText fName_et;
+    EditText lName_et;
+    EditText email_et;
+    EditText stPass_et;
+    EditText ndPass_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +40,11 @@ public class RegistraActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        EditText fName_et = (EditText) findViewById(R.id.firstName);
-        EditText lName_et = (EditText) findViewById(R.id.lastname);
-        EditText email_et = (EditText) findViewById(R.id.email);
-        EditText stPass_et = (EditText) findViewById(R.id.first_password);
-        EditText ndPass_et = (EditText) findViewById(R.id.second_password);
+        fName_et = findViewById(R.id.firstName);
+        lName_et = findViewById(R.id.lastname);
+        email_et = findViewById(R.id.email);
+        stPass_et = findViewById(R.id.first_password);
+        ndPass_et = findViewById(R.id.second_password);
 
         String fName = fName_et.getText().toString();
         String lName = lName_et.getText().toString();
@@ -67,6 +72,7 @@ public class RegistraActivity extends AppCompatActivity {
         if(Pattern.matches("^[a-z]+[0-9]*@([\\w-]+\\.)+[\\w-]{2,4}$", email)){
             return true;
         }
+        //error message?
         return false;
     }
 
@@ -74,6 +80,7 @@ public class RegistraActivity extends AppCompatActivity {
         if(Pattern.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", password)){
             return true;
         }
+        //error message?
         return false;
     }
 }

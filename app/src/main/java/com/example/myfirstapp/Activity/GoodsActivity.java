@@ -41,7 +41,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         dateText = findViewById(R.id.dateText);
         locationText = findViewById(R.id.locationText);
         descriptionText = findViewById(R.id.descriptionText);
-        errorMessage = (TextView) findViewById(R.id.errorMessageTextView);
+        errorMessage = findViewById(R.id.errorMessageTextView);
 
     }
 
@@ -56,7 +56,6 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-    // Basic error handling below, refactoring needed here, in the test and in UI
     private boolean validateTitle(String titleInput){
         if(titleInput.isEmpty()) {
             errorMessage.setText("Error: Enter a valid title.");
