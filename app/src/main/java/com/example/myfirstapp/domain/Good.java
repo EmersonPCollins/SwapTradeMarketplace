@@ -19,7 +19,7 @@ public class Good {
      * Creates a good
      *
      * @param title - title of the good
-     * @param availability_date - the date of which the good is available for exchange
+     * //@param availability_date - the date of which the good is available for exchange
      */
     public Good(String title, String date, String description, String exchange_location, String user_email){
         this.title = title;

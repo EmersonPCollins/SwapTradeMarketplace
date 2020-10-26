@@ -20,6 +20,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class RegistraActivity extends AppCompatActivity {
+    EditText fName_et;
+    EditText lName_et;
+    EditText email_et;
+    EditText stPass_et;
+    EditText ndPass_et;
+    TextView error_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +41,12 @@ public class RegistraActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        EditText fName_et = (EditText) findViewById(R.id.firstName);
-        EditText lName_et = (EditText) findViewById(R.id.lastname);
-        EditText email_et = (EditText) findViewById(R.id.email);
-        EditText stPass_et = (EditText) findViewById(R.id.first_password);
-        EditText ndPass_et = (EditText) findViewById(R.id.second_password);
+        fName_et = findViewById(R.id.firstName);
+        lName_et = findViewById(R.id.lastname);
+        email_et = findViewById(R.id.email);
+        stPass_et = findViewById(R.id.first_password);
+        ndPass_et = findViewById(R.id.second_password);
+        error_tv = findViewById(R.id.errorMessageView);
 
         String fName = fName_et.getText().toString();
         String lName = lName_et.getText().toString();
@@ -47,7 +54,7 @@ public class RegistraActivity extends AppCompatActivity {
         String stPass = stPass_et.getText().toString();
         String ndPass = ndPass_et.getText().toString();
 
-        if(!fName.isEmpty() && !lName.isEmpty() && validEmail(email) && validPass(stPass) && stPass.equals(ndPass)){
+        if(!nameEmpty(fName,lName) && validEmail(email) && validPass(stPass) && stPass.equals(ndPass)){
             User user = new User(fName, lName, email, stPass);
             //Database connection here
             goToHome();
@@ -67,11 +74,21 @@ public class RegistraActivity extends AppCompatActivity {
         if(Pattern.matches("^[a-z]+[0-9]*@([\\w-]+\\.)+[\\w-]{2,4}$", email)){
             return true;
         }
+        error_tv.setText("Error: Email not valid");
         return false;
     }
 
     private boolean validPass(String password) {
         if(Pattern.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", password)){
+            return true;
+        }
+        error_tv.setText("Error: password not valid");
+        return false;
+    }
+
+    private boolean nameEmpty(String fName, String lName){
+        if(fName.isEmpty() || lName.isEmpty()){
+            error_tv.setText("Error: name fields can not be empty");
             return true;
         }
         return false;
