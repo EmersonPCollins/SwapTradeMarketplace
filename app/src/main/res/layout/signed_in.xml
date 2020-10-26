@@ -16,7 +16,7 @@
         android:layout_marginEnd="41dp"
         android:layout_marginRight="41dp"
         android:layout_marginBottom="81dp"
-        android:text="Recieve Good"
+        android:text="Receive Good"
         app:layout_constraintBottom_toTopOf="@+id/browseButton"
         app:layout_constraintEnd_toStartOf="@+id/provideButton"
         app:layout_constraintStart_toStartOf="parent"
