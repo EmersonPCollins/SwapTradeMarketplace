@@ -25,6 +25,7 @@ public class RegistraActivity extends AppCompatActivity {
     EditText email_et;
     EditText stPass_et;
     EditText ndPass_et;
+    TextView error_tv = findViewById(R.id.errorMessageView);;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class RegistraActivity extends AppCompatActivity {
         String stPass = stPass_et.getText().toString();
         String ndPass = ndPass_et.getText().toString();
 
-        if(!fName.isEmpty() && !lName.isEmpty() && validEmail(email) && validPass(stPass) && stPass.equals(ndPass)){
+        if(!nameEmpty(fName,lName) && validEmail(email) && validPass(stPass) && stPass.equals(ndPass)){
             User user = new User(fName, lName, email, stPass);
             //Database connection here
             goToHome();
@@ -72,7 +73,7 @@ public class RegistraActivity extends AppCompatActivity {
         if(Pattern.matches("^[a-z]+[0-9]*@([\\w-]+\\.)+[\\w-]{2,4}$", email)){
             return true;
         }
-        //error message?
+        error_tv.setText("Error: Email not valid");
         return false;
     }
 
@@ -80,7 +81,15 @@ public class RegistraActivity extends AppCompatActivity {
         if(Pattern.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", password)){
             return true;
         }
-        //error message?
+        error_tv.setText("Error: password not valid");
+        return false;
+    }
+
+    private boolean nameEmpty(String fName, String lName){
+        if(fName.isEmpty() || lName.isEmpty()){
+            error_tv.setText("Error: name fields can not be empty");
+            return true;
+        }
         return false;
     }
 }
