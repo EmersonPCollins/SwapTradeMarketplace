@@ -1,9 +1,11 @@
 package com.example.myfirstapp.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +30,8 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private EditText locationText;
     private EditText descriptionText;
     private TextView errorMessage;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ImageView goodImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +39,18 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_goods);
 
         Button button = (Button) findViewById(R.id.ImageUploadButton);
+        goodImage = (ImageView) findViewById(R.id.good_image);
         button.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  try{
-                      Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                      startActivity(cameraIntent);
-                      System.out.println(MediaStore.Images.ImageColumns.DATA);
-                  }catch (Exception e){
-                      System.out.println("error -> " + e.toString());
-                  }
-              }
+            @Override
+            public void onClick(View v) {
+                try{
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+                    System.out.println(MediaStore.Images.ImageColumns.DATA);
+                }catch (Exception e){
+                    System.out.println("error -> " + e.toString());
+                }
+            }
         });
 
         Spinner spinner = findViewById(R.id.categoriesSpinner);
@@ -73,6 +79,18 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            goodImage.setImageBitmap(imageBitmap);
+        }
+
+
+    }
     private boolean validateTitle(String titleInput){
         if(titleInput.isEmpty()) {
             errorMessage.setText("Error: Enter a valid title.");
