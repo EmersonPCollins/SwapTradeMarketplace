@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,14 +20,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.myfirstapp.domain.*;
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.service.DatabaseService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,6 +44,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private TextView errorMessage;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView goodImage;
+    private String imageURL;
     StorageReference storageReference;
 
 
@@ -114,12 +113,12 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     private void uploadImageToFirebase(String imageFileName, Bitmap imageBitmap) {
-        final StorageReference testImage = storageReference.child("images/" + imageFileName);
+        final StorageReference imageReference = storageReference.child("images/" + imageFileName);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = testImage.putBytes(data);
+        UploadTask uploadTask = imageReference.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -129,17 +128,15 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // Handle successful uploads
-                //testImage.getDownloadUrl(););
-                Log.d("tag", "URL: " + testImage.getDownloadUrl());
+                //imageReference.getDownloadUrl(););
+                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        imageURL = uri.toString();
+                    }
+                });
             }
         });
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.PNG,100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 
     private boolean validateTitle(String titleInput){
@@ -185,7 +182,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         String locationInput = locationText.getText().toString().trim();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(dateInput) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, dateInput, descriptionInput, locationInput, "email@example.com");
+            insertGood(titleInput, dateInput, descriptionInput, locationInput, "email@example.com", imageURL);
         }
 
     }
@@ -203,8 +200,8 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         return true;
     }
 
-    public void insertGood(String title, String date, String description, String location, String email){
-        Good good = new Good(title, date, description, location, email);
+    public void insertGood(String title, String date, String description, String location, String email, String imageURL){
+        Good good = new Good(title, date, description, location, email, imageURL);
         //get the db connection
         DatabaseService db = new DatabaseService();
         db.writeGood(good);
