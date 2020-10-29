@@ -1,14 +1,18 @@
 package com.example.myfirstapp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,11 +21,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myfirstapp.domain.*;
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.service.DatabaseService;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GoodsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -32,11 +46,15 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private TextView errorMessage;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView goodImage;
+    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods);
+
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         Button button = (Button) findViewById(R.id.ImageUploadButton);
         goodImage = (ImageView) findViewById(R.id.good_image);
@@ -87,10 +105,43 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             goodImage.setImageBitmap(imageBitmap);
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "JPEG_" + timeStamp + ".jpeg";
+
+            uploadImageToFirebase(imageFileName, imageBitmap);
         }
 
-
     }
+
+    private void uploadImageToFirebase(String imageFileName, Bitmap imageBitmap) {
+        final StorageReference testImage = storageReference.child("images/" + imageFileName);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = testImage.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // Handle successful uploads
+                //testImage.getDownloadUrl(););
+                Log.d("tag", "URL: " + testImage.getDownloadUrl());
+            }
+        });
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.PNG,100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
     private boolean validateTitle(String titleInput){
         if(titleInput.isEmpty()) {
             errorMessage.setText("Error: Enter a valid title.");
