@@ -13,15 +13,15 @@
         tools:context=".Activity.GoodsActivity">
 
         <TextView
-            android:text="''"
+            android:id="@+id/errorMessageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
+            android:text="''"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/errorMessageTextView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/titleText"
@@ -82,9 +82,7 @@
             android:text="Post Your Ad"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionText"
-            app:layout_constraintVertical_bias="0.691" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/locationText"
@@ -117,17 +115,24 @@
             android:id="@+id/ImageUploadButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="143dp"
-            android:layout_marginLeft="143dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="144dp"
-            android:layout_marginRight="144dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="55dp"
             android:text="Upload Image"
             app:layout_constraintBottom_toTopOf="@+id/submitGoodButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.745"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
+            app:layout_constraintTop_toBottomOf="@+id/descriptionText"
+            app:layout_constraintVertical_bias="0" />
+
+        <ImageView
+            android:id="@+id/good_image"
+            android:layout_width="97dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toStartOf="@+id/ImageUploadButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionText"
+            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
