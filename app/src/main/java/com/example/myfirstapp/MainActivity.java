@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (true) {//databaseService.userExists(email, password)) {
+                if (databaseService.userExists(email, password)) {
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 }
