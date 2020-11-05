@@ -48,12 +48,12 @@ public class SettingsActivity extends AppCompatActivity {
                 if(isChecked){
                     //the toggle is enabled - enable location permission prompt? figure out how to just allow(?_
                     try{
-                        if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
-                                != PackageManager.PERMISSION_GRANTED) {//if it does not have permission
+                        //if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
+                          //      != PackageManager.PERMISSION_GRANTED) {//if it does not have permission
 
                             ActivityCompat.requestPermissions(SettingsActivity.this, new String[]{manifestPermission},
                                     REQUEST_CODE_PERMISSION);
-                        }
+                        //}
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -87,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                     if(ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
                             == PackageManager.PERMISSION_GRANTED){//if it was granted already or in the previous statement
-                        gps.setUpGPS();//will check to make sure network is good
+                        gps.setCanGetLocation(true);//will check to make sure network is good
                     }
                 } catch (Exception e){
                     e.printStackTrace();

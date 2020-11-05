@@ -58,9 +58,7 @@ public class GPSLocation extends Service implements LocationListener {
             //get network status
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGPSEnabled && !isNetworkEnabled) {
-                //check if the GPS is enabled and make sure the network provider is enabled - print error message here if needed/wanted
-            } else {//GPS is Enabled and network is connected
+            if (isGPSEnabled && isNetworkEnabled) {
                 this.canGetLocation = true;
             }
         } catch (Exception e) {
@@ -71,38 +69,38 @@ public class GPSLocation extends Service implements LocationListener {
     @SuppressLint("MissingPermission")
     public Location getLocation(){
         if(canGetLocation){
-                //get location from network provider if the network is enabled
-                if(isNetworkEnabled){
+            //get location from network provider if the network is enabled
+            if(isNetworkEnabled){
+                locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        MIN_TIME_BETWEEN_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                if(locationManager != null){
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null){
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    }
+                }
+            }
+
+            //get GPS lat/long with GPS Services if GPS is enabled
+            if(isGPSEnabled){//can add error messages at any step
+                if(location == null){
                     locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
+                            locationManager.GPS_PROVIDER,
                             MIN_TIME_BETWEEN_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    if(locationManager != null){
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null){
+                    if(locationManager!=null){
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if(location!= null){
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                         }
                     }
                 }
-
-                //get GPS lat/long with GPS Services if GPS is enabled
-                if(isGPSEnabled){//can add error messages at any step
-                    if(location == null){
-                        locationManager.requestLocationUpdates(
-                                locationManager.GPS_PROVIDER,
-                                MIN_TIME_BETWEEN_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        if(locationManager!=null){
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if(location!= null){
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                            }
-                        }
-                    }
-                }
             }
+        }
         return location;
     }
 
@@ -134,7 +132,16 @@ public class GPSLocation extends Service implements LocationListener {
     }
 
     public void setCanGetLocation(boolean canGetLocation){
-        this.canGetLocation=canGetLocation;
+        if(canGetLocation){
+            if (isGPSEnabled && isNetworkEnabled) {
+                this.canGetLocation = true;//because canGetLocation is true and it has the GPS enabled and Network enabled
+                getLocation();
+            }else{
+                this.canGetLocation=false;//because the GPS and Network is not enabled
+            }
+        }else{
+            this.canGetLocation=false;//false because canGetLocation is false
+        }
     }
 
     //make an alert function in case we want to initiate the location prompt on different pages
