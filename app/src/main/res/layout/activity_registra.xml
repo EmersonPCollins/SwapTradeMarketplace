@@ -144,7 +144,7 @@
         android:layout_marginEnd="52dp"
         android:layout_marginRight="52dp"
         android:layout_marginBottom="24dp"
-        android:text="Password must contain eight characters, at least one upper case letter, number, and special character."
+        android:text="Password must contain at least eight characters, one upper case letter, and one number."
         app:layout_constraintBottom_toTopOf="@+id/registButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
