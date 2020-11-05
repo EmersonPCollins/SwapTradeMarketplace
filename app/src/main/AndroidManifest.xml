@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.myfirstapp.Activity.RegistraActivity"></activity>
+        <activity android:name="com.example.myfirstapp.Activity.SearchActivity"></activity>
         <activity android:name="com.example.myfirstapp.Activity.GoodsActivity"/>
         <activity android:name="com.example.myfirstapp.Activity.SettingsActivity"/>
     </application>
