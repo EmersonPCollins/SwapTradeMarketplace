@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.domain.User;
+import com.example.myfirstapp.service.DatabaseService;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -20,6 +22,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class RegistraActivity extends AppCompatActivity {
+
+    private DatabaseService databaseService;
+
     EditText fName_et;
     EditText lName_et;
     EditText email_et;
@@ -31,6 +36,8 @@ public class RegistraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registra);
+
+        databaseService = new DatabaseService(FirebaseDatabase.getInstance());
 
         Button register = (Button) findViewById(R.id.registButton);
         register.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +63,9 @@ public class RegistraActivity extends AppCompatActivity {
 
         if(!nameEmpty(fName,lName) && validEmail(email) && validPass(stPass) && stPass.equals(ndPass)){
             User user = new User(fName, lName, email, stPass);
-            //Database connection here
+
+            databaseService.writeUser(user);
+
             goToHome();
         }else{
             TextView error_et = (TextView) findViewById(R.id.errorText);
