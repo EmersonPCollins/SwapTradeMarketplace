@@ -1,6 +1,7 @@
 package com.example.myfirstapp.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +64,9 @@ public class RegistraActivity extends AppCompatActivity {
 
         if(!nameEmpty(fName,lName) && validEmail(email) && validPass(stPass) && stPass.equals(ndPass)){
             User user = new User(fName, lName, email, stPass);
+
+            SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+            preference.edit().putString("email", email).apply();
 
             databaseService.writeUser(user);
 
