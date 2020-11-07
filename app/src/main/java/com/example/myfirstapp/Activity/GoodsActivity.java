@@ -201,7 +201,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void insertGood(String title, String startDate, String endDate, String description, String location, String email, String imageURL, String type){
-        Good good = new Good(title, startDate, endDate, description, location, email, imageURL);
+        Good good = new Good(title, startDate, endDate, description, location, email, imageURL, type);
         //get the db connection
         DatabaseService db = new DatabaseService();
         db.writeGood(good);
