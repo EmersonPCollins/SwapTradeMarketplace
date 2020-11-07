@@ -9,15 +9,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class DatabaseService {
 
     private FirebaseDatabase database;
     private String userLocation = "users";
     private String goodLocation = "goods";
 
-    /**
-     * Constructors
-     */
     public DatabaseService(FirebaseDatabase database) {
         this.database = database;
     }
@@ -26,34 +25,26 @@ public class DatabaseService {
         this.database = FirebaseDatabase.getInstance();
     }
 
-    /**
-     * Used to write a user to the firebase database
-     *
-     * @param user - User to be submitted
-     */
     public void writeUser(User user) {
         DatabaseReference ref = database.getReference(userLocation);
 
         ref.setValue(user);
     }
 
-    /**
-     * Reads user from db
-     *
-     * @param email - email of user
-     * @return User or null
-     */
-    public User readUser(String email) {
+    public User readUser(final String email) {
 
         final User[] userData = new User[1];
         DatabaseReference ref = database.getReference(userLocation);
 
-        ref.child("email").addValueEventListener(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    userData[0] = user;
+                for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
+                    User user = adSnapshot.getValue(User.class);
+
+                    if (user != null && email.equals(user.getEmail())) {
+                        userData[0] = user;
+                    }
                 }
             }
 
@@ -66,15 +57,49 @@ public class DatabaseService {
         return userData[0];
     }
 
-    /**
-     * Used to write a good to the firebase database
-     *
-     * @param good - The good a user is adding
-     */
     public void writeGood(Good good) {
         DatabaseReference ref = database.getReference(goodLocation);
 
         ref.setValue(good);
+    }
+
+    public ArrayList<Good> readGoods(final String title, final String location, final String type) {
+        final ArrayList<Good> goods = new ArrayList<>();
+        DatabaseReference ref = database.getReference(goodLocation);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot adSnapshot : snapshot.getChildren()) {
+                    Good good = adSnapshot.getValue(Good.class);
+
+                    if (good == null) {
+                        continue;
+                    }
+
+                    if (!title.equals("") && !title.equals(good.getTitle())) {
+                        continue;
+                    }
+
+                    if (!location.equals("") && !location.equals(good.getExchange_location())) {
+                        continue;
+                    }
+
+                    if (!type.equals("") && !type.equals(good.getType())) {
+                        continue;
+                    }
+
+                    goods.add(good);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return goods;
     }
 
     /**
