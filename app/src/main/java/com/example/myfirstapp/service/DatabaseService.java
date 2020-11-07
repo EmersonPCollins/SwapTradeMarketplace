@@ -1,6 +1,12 @@
 package com.example.myfirstapp.service;
 
+import android.app.Activity;
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
+
+import com.example.myfirstapp.Activity.HomeActivity;
+import com.example.myfirstapp.MainActivity;
 import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.domain.User;
 import com.google.firebase.database.DataSnapshot;
@@ -14,7 +20,7 @@ import java.util.ArrayList;
 public class DatabaseService {
 
     private FirebaseDatabase database;
-    private String userLocation = "users";
+    private static String userLocation = "users";
     private String goodLocation = "goods";
 
     public DatabaseService(FirebaseDatabase database) {
@@ -28,39 +34,37 @@ public class DatabaseService {
     public void writeUser(User user) {
         DatabaseReference ref = database.getReference(userLocation);
 
-        ref.setValue(user);
+        ref.child(user.getId()).setValue(user);
     }
 
-    public User readUser(final String email) {
+    public boolean readUser(final String email, final String password) {
 
-        final User[] userData = new User[1];
+        final boolean[] userExists = {false};
         DatabaseReference ref = database.getReference(userLocation);
+        final String id = email.replace(".", "");
 
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
-                    User user = adSnapshot.getValue(User.class);
+                String passwordGiven = dataSnapshot.child("password").getValue(String.class);
 
-                    if (user != null && email.equals(user.getEmail())) {
-                        userData[0] = user;
-                    }
+                if (password.equals(passwordGiven)) {
+                    userExists[0] = true;
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+            }});
 
-        return userData[0];
+        return userExists[0];
     }
 
     public void writeGood(Good good) {
         DatabaseReference ref = database.getReference(goodLocation);
 
-        ref.setValue(good);
+        ref.child(good.getId()).setValue(good);
     }
 
     public ArrayList<Good> readGoods(final String title, final String location, final String type) {
@@ -102,24 +106,4 @@ public class DatabaseService {
         return goods;
     }
 
-    /**
-     * Check that a user exists in db given login details
-     */
-    public boolean userExists(String email, String password) {
-        User user = readUser(email);
-
-        if (user == null) {
-            return false;
-        }
-
-        if (!user.getEmail().equals(email)) {
-            return false;
-        }
-
-        if (!user.getPassword().equals(password)) {
-            return false;
-        }
-
-        return true;
-    }
 }

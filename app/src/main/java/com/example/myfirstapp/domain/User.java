@@ -1,6 +1,9 @@
 package com.example.myfirstapp.domain;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Represents a user of the app, used in FireBase DB
@@ -8,10 +11,13 @@ import java.util.Objects;
  */
 public class User {
 
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+
+    public User() {};
 
     /**
      * Creates a user
@@ -23,6 +29,17 @@ public class User {
      */
     public User(String firstName, String lastName, String email, String password) {
 
+        this.id = email.replace(".", "");
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+
+    }
+
+    public User(String firstName, String lastName, String email, String password, String id) {
+
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -49,6 +66,10 @@ public class User {
         return password;
     }
 
+    public String getId() {
+        return id;
+    }
+
     /**
      * Setters
      */
@@ -73,6 +94,10 @@ public class User {
                 this.lastName.equals(user.lastName) &&
                 this.email.equals(user.email) &&
                 this.password.equals(user.password);
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

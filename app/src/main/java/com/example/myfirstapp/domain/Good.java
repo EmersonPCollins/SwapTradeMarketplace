@@ -1,11 +1,14 @@
 package com.example.myfirstapp.domain;
 
+import java.util.UUID;
+
 /**
  * Good - Represents a good of a user
  *
  */
 public class  Good {
 
+    private String id;
     private String title;
     private String description;
     private String date;
@@ -17,6 +20,8 @@ public class  Good {
     private String image_url;
     private String type;
 
+    public Good() {};
+
     /**
      * Creates a good
      *
@@ -24,6 +29,7 @@ public class  Good {
      * //@param availability_date - the date of which the good is available for exchange
      */
     public Good(String title, String date, String description, String exchange_location, String user_email, String image_url, String type){
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.date = date;
         this.description = description;
@@ -57,6 +63,10 @@ public class  Good {
     public String getExchange_location(){ return exchange_location; }
 
     public String getImage_url(){ return image_url; }
+
+    public String getId() {
+        return id;
+    }
 
     /**
      * Setters
