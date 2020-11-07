@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (!databaseService.userExists(email, password)) {
+                    //keeping track of the user's email across all activities
                     SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
-                    preference.edit().putString("email", "fake@email.com").apply();
+                    preference.edit().putString("email", email).apply();
 
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
