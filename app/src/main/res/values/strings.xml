@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My First App</string>
+    <string name="app_name">Barter</string>
     <string name="email">email</string>
     <string name="firstPassword">password</string>
     <string name="confirmPassword">confirm password</string>
