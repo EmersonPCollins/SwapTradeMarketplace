@@ -10,11 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myfirstapp.Activity.RegistraActivity;
+import com.example.myfirstapp.Activity.*;
 import com.example.myfirstapp.service.DatabaseService;
 import com.google.firebase.database.FirebaseDatabase;
-
-import com.example.myfirstapp.Activity.HomeActivity;
 
 /**
  * MainActivity is the login page of the app
@@ -54,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "The email address or password does not match any account.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
