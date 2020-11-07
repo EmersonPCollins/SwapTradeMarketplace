@@ -4,7 +4,7 @@ package com.example.myfirstapp.domain;
  * Good - Represents a good of a user
  *
  */
-public class Good {
+public class  Good {
 
     private String title;
     private String description;
@@ -15,6 +15,7 @@ public class Good {
     private String exchange_location;
     private String user_email;
     private String image_url;
+    private String type;
 
     /**
      * Creates a good
@@ -22,7 +23,7 @@ public class Good {
      * @param title - title of the good
      * //@param availability_date - the date of which the good is available for exchange
      */
-    public Good(String title, String date, String description, String exchange_location, String user_email, String image_url){
+    public Good(String title, String date, String description, String exchange_location, String user_email, String image_url, String type){
         this.title = title;
         this.date = date;
         this.description = description;
@@ -30,6 +31,7 @@ public class Good {
         this.availability_date = availability_date;
         this.user_email = user_email;
         this.image_url = image_url;
+        this.type = type;
     }
 
     /**
@@ -44,6 +46,8 @@ public class Good {
     public String getUsed_duration(){ return used_duration; }
 
     public String getUser_email(){ return user_email; }
+
+    public String getType() { return type; }
 
     /**
      * the current state of a good could: [new, moderate, old]
@@ -76,4 +80,6 @@ public class Good {
     }
 
     public void setImage_url(String image_url){ this.image_url = image_url; }
+
+    public void setType(String type) { this.type = type; }
 }
