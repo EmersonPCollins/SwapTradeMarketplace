@@ -67,9 +67,6 @@ public class RegistraActivity extends AppCompatActivity {
             databaseService.writeUser(user);
 
             goToHome();
-        }else{
-            TextView error_et = (TextView) findViewById(R.id.errorText);
-            error_et.setText("invalid input");
         }
 
     }
