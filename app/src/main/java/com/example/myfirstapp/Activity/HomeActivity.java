@@ -44,6 +44,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivityForResult(myIntent, 0);
             }
         });
+
+        Button browse = findViewById(R.id.browseButton);
+        browse.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), SearchActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
     }
 
 
