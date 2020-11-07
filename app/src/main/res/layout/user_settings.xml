@@ -7,6 +7,20 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/getLocationButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginLeft="39dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginBottom="84dp"
+        android:text="Find location"
+        app:layout_constraintBottom_toTopOf="@+id/applyButton"
+        app:layout_constraintEnd_toStartOf="@+id/location"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/applyButton"
         android:layout_width="209dp"
         android:layout_height="0dp"
@@ -61,32 +75,14 @@
         app:layout_constraintStart_toEndOf="@+id/emailText"
         app:layout_constraintTop_toBottomOf="@+id/lastName" />
 
-    <Switch
-        android:id="@+id/locationAllowSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
-        android:layout_marginLeft="39dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="13dp"
-        android:text="Allow location"
-        app:layout_constraintBottom_toTopOf="@+id/getLocationButton"
-        app:layout_constraintEnd_toStartOf="@+id/location"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/location"
         android:layout_width="179dp"
         android:layout_height="88dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
         android:layout_marginTop="63dp"
         android:layout_marginEnd="27dp"
         android:layout_marginRight="27dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/locationAllowSwitch"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
@@ -169,5 +165,18 @@
         android:text="Back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/allowLocationPermission"
+        android:layout_width="129dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="36dp"
+        android:text="Allow Location"
+        app:layout_constraintBottom_toTopOf="@+id/getLocationButton2"
+        app:layout_constraintEnd_toStartOf="@+id/location"
+        app:layout_constraintHorizontal_bias="0.404"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordText"
+        app:layout_constraintVertical_bias="0.612" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

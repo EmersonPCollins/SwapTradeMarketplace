@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText passwordText = findViewById(R.id.passwordField);
         final Button loginButton = findViewById(R.id.loginButton);
         final Button registerButton = findViewById(R.id.newRegisterButton);
-
+        
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -22,14 +22,28 @@ import org.w3c.dom.Text;
 public class SettingsActivity extends AppCompatActivity {
 
     //To keep gps location
-    GPSLocation gps;
+    GPSLocation gps = new GPSLocation(SettingsActivity.this);;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String manifestPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+    Button locationPermission, findLocation;
+    TextView locationmsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_settings);
+
+        //check for permission
+        locationmsg = (TextView) findViewById(R.id.location);
+        locationPermission = (Button) findViewById(R.id.allowLocationPermission);
+        if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
+                == PackageManager.PERMISSION_GRANTED) {//if it has permission gray out button
+            locationPermission.setEnabled(false);
+            locationmsg.setText("Location Permission Granted. Can be changed in permission settings of device.");
+            gps.getLocation();
+        }else{
+            locationPermission.setEnabled(true);
+        }
 
         Button back = findViewById(R.id.backButton);
         back.setOnClickListener(new View.OnClickListener() {
@@ -40,69 +54,64 @@ public class SettingsActivity extends AppCompatActivity {
 
         });
 
-        Switch locationPermission = (Switch) findViewById(R.id.locationAllowSwitch);
-        final TextView locationmsg = (TextView) findViewById(R.id.location);
-        locationPermission.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        locationPermission.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
-                    //the toggle is enabled - enable location permission prompt? figure out how to just allow(?_
-                    try{
-                        //if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
-                          //      != PackageManager.PERMISSION_GRANTED) {//if it does not have permission
-
-                            ActivityCompat.requestPermissions(SettingsActivity.this, new String[]{manifestPermission},
-                                    REQUEST_CODE_PERMISSION);
-                        //}
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
+            public void onClick(View view) {
+                try {
                     if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
-                            == PackageManager.PERMISSION_GRANTED) {//if permission was granted
-                        locationmsg.setText("Location Permission Granted");
-                    }else{
-                        locationmsg.setText("Location Permission Denied");
+                            != PackageManager.PERMISSION_GRANTED) {//if it does not have permission
+                        ActivityCompat.requestPermissions(SettingsActivity.this, new String[]{manifestPermission},
+                                REQUEST_CODE_PERMISSION);//ask for it
                     }
-                }else{
-                    gps.setCanGetLocation(false);
-                    locationmsg.setText("Location Permission \nDenied");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
+                        == PackageManager.PERMISSION_GRANTED) {//if permission was granted
+                    locationmsg.setText("Location Permission Granted. Can be changed in permission settings of device.");
+                    locationPermission.setEnabled(false);
+                    gps.getLocation();
+                } else {
+                    locationmsg.setText("Location Permission Denied.");
                 }
             }
         });
 
-        Button findLocation = (Button) findViewById(R.id.getLocationButton);
+        findLocation = (Button) findViewById(R.id.getLocationButton);
         findLocation.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
-                // create class object
-                //gps = new GPSLocation(SettingsActivity.this);
                 //ask for location permission if it isn't already given
-                try{
+                try {
                     if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
                             != PackageManager.PERMISSION_GRANTED) {//if it does not have permission
 
                         ActivityCompat.requestPermissions(SettingsActivity.this, new String[]{manifestPermission},
                                 REQUEST_CODE_PERMISSION);
                     }
-                    if(ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
-                            == PackageManager.PERMISSION_GRANTED){//if it was granted already or in the previous statement
-                        gps.setCanGetLocation(true);//will check to make sure network is good
-                    }
-                } catch (Exception e){
-                    e.printStackTrace();
+                } catch (Exception e) {
+                            e.printStackTrace();
                 }
-                // check if GPS enabled
-                if(gps.canGetLocation()){
+                if (ActivityCompat.checkSelfPermission(SettingsActivity.this, manifestPermission)
+                        == PackageManager.PERMISSION_GRANTED) {//if it was granted already or in the previous statement
+                    locationmsg.setText("Location Permission Granted. Can be changed in permission settings of device.");
+                    locationPermission.setEnabled(false);
                     gps.getLocation();
-                    double latitude = gps.getLatitude();
-                    double longitude = gps.getLongitude();
+                    // check if GPS enabled
+                    if (gps.canGetLocation()) {
 
-                    locationmsg.setText("Latitude: "+latitude+"\nLongitude: "+longitude);
-                }else{
+                        double latitude = gps.getLatitude();
+                        double longitude = gps.getLongitude();
 
+                        locationmsg.setText("Latitude: " + latitude + "\nLongitude: " + longitude);
+
+                    } else {
+                        locationmsg.setText("Could not connect to GPS or Network.");
+                    }
+                } else {
+                    locationmsg.setText("Enable location by clicking the Allow Location button to use this feature.");
+                    locationPermission.setEnabled(true);//just in case
                 }
-
             }
         });
     }
