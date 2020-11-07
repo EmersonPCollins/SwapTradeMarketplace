@@ -20,7 +20,6 @@ public class Good {
     private String current_state;
     private String exchange_location;
     private String user_email;
-    private boolean expired;
 
     /**
      * Creates a good
@@ -36,7 +35,6 @@ public class Good {
         this.exchange_location = exchange_location;
         this.availability_end_date = date;
         this.user_email = user_email;
-        expired = false;
     }
 
     /**
@@ -81,9 +79,12 @@ public class Good {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public LocalDate isExpired(){
+    public boolean isExpired(){
         LocalDate today = LocalDate.now();
         LocalDate enddate = LocalDate.of(Integer.parseInt(availability_end_date.substring(0,4)),Integer.parseInt(availability_end_date.substring(5,7)),Integer.parseInt(availability_end_date.substring(8)));
-        return enddate;
+        if(today.isAfter(enddate)){
+            return true;
+        }
+        return false;
     }
 }
