@@ -34,7 +34,7 @@ public class Good {
      * @param title - title of the good
      * //@param availability_date - the date of which the good is available for exchange
      */
-    public Good(String title, String date, String description, String exchange_location, String user_email, String image_url, String type){
+    public Good(String title, String startDate, String endDate, String description, String exchange_location, String user_email, String image_url, String type){
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
