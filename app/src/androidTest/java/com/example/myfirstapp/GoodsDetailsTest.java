@@ -24,7 +24,7 @@ public class GoodsDetailsTest {
                 .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
                 .perform(click())
-                .perform(typeText("01/11/2020"), closeSoftKeyboard());
+                .perform(typeText("2020-11-01"), closeSoftKeyboard());
         onView(withId(R.id.descriptionText))
                 .perform(click(), closeSoftKeyboard())
                 .perform(typeText("My Description"));
@@ -47,7 +47,7 @@ public class GoodsDetailsTest {
                 .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
                 .perform(click())
-                .perform(typeText("01/11/2020"), closeSoftKeyboard());
+                .perform(typeText("2020-11-01"), closeSoftKeyboard());
 
         onView(withId(R.id.descriptionText))
                 .perform(click())
@@ -80,7 +80,7 @@ public class GoodsDetailsTest {
 
         onView(withId(R.id.dateText))
                 .perform(click())
-                .perform(typeText("1/11/2020"), closeSoftKeyboard());
+                .perform(typeText("2020-11-01"), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
                 .perform(click());
         onView(withId(R.id.errorMessageTextView))
@@ -94,7 +94,7 @@ public class GoodsDetailsTest {
                 .perform(typeText("My Title"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
                 .perform(click())
-                .perform(typeText("01/11/2020"), closeSoftKeyboard());
+                .perform(typeText("2020-11-01"), closeSoftKeyboard());
         onView(withId(R.id.descriptionText))
                 .perform(click(), closeSoftKeyboard())
                 .perform(typeText("My Description"), closeSoftKeyboard());
@@ -117,7 +117,7 @@ public class GoodsDetailsTest {
                 .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
                 .perform(click())
-                .perform(typeText("01/11/2020"), closeSoftKeyboard());
+                .perform(typeText("2020-11-01"), closeSoftKeyboard());
         onView(withId(R.id.descriptionText))
                 .perform(click(), closeSoftKeyboard())
                 .perform(typeText("My Description"), closeSoftKeyboard());

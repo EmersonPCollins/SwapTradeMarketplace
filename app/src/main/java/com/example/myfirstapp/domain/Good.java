@@ -14,8 +14,8 @@ public class Good {
 
     private String title;
     private String description;
-    private LocalDate date;
-    private String availability_end_date;
+    private String startDate;
+    private String endDate;
     private String used_duration;
     private String current_state;
     private String exchange_location;
@@ -28,12 +28,12 @@ public class Good {
      * //@param availability_date - the date of which the good is available for exchange
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Good(String title, String date, String description, String exchange_location, String user_email){
+    public Good(String title, String startDate, String endDate, String description, String exchange_location, String user_email){
         this.title = title;
-        this.date = LocalDate.now();
+        this.startDate = startDate;
         this.description = description;
         this.exchange_location = exchange_location;
-        this.availability_end_date = date;
+        this.endDate = endDate;
         this.user_email = user_email;
     }
 
@@ -44,7 +44,7 @@ public class Good {
 
     public String getDescription(){ return description; }
 
-    public String getAvailability_date(){ return availability_end_date; }
+    public String getAvailability_end_date(){ return endDate; }
 
     public String getUsed_duration(){ return used_duration; }
 
@@ -64,8 +64,8 @@ public class Good {
 
     public void setDescription(String description){ this.description = description; }
 
-    public void setAvailability_date(String availability_date){
-        this.availability_end_date = availability_date;
+    public void setAvailability_end_date(String availability_end_date){
+        this.endDate = availability_end_date;
     }
 
     public void setUsed_duration(String used_duration){ this.used_duration = used_duration; }
@@ -81,7 +81,7 @@ public class Good {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean isExpired(){
         LocalDate today = LocalDate.now();
-        LocalDate enddate = LocalDate.of(Integer.parseInt(availability_end_date.substring(0,4)),Integer.parseInt(availability_end_date.substring(5,7)),Integer.parseInt(availability_end_date.substring(8)));
+        LocalDate enddate = LocalDate.of(Integer.parseInt(endDate.substring(0,4)),Integer.parseInt(endDate.substring(5,7)),Integer.parseInt(endDate.substring(8)));
         if(today.isAfter(enddate)){
             return true;
         }
