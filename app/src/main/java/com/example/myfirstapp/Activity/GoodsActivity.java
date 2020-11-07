@@ -31,6 +31,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class GoodsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -175,12 +176,13 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onSubmit(View view) {
         errorMessage.setText(null);
         String titleInput = titleText.getText().toString().trim();
-        String dateInput = dateText.getText().toString().trim();
+        String endDate = dateText.getText().toString().trim();
         String descriptionInput = descriptionText.getText().toString().trim();
         String locationInput = locationText.getText().toString().trim();
+        LocalDate startDate = LocalDate.now();
 
-        if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(dateInput) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, dateInput, descriptionInput, locationInput, "email@example.com", imageURL);
+        if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(endDate) && validateDescription(descriptionInput)) {
+            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", "url", "type");
         }
 
     }
@@ -198,8 +200,8 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         return true;
     }
 
-    public void insertGood(String title, String date, String description, String location, String email, String imageURL){
-        Good good = new Good(title, date, description, location, email, imageURL);
+    public void insertGood(String title, String startDate, String endDate, String description, String location, String email, String imageURL, String type){
+        Good good = new Good(title, startDate, endDate, description, location, email, imageURL, type);
         //get the db connection
         DatabaseService db = new DatabaseService();
         db.writeGood(good);

@@ -1,5 +1,11 @@
 package com.example.myfirstapp.domain;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalDate;
+
 /**
  * Good - Represents a good of a user
  *
@@ -8,13 +14,14 @@ public class Good {
 
     private String title;
     private String description;
-    private String date;
-    private String availability_date;
+    private String startDate;
+    private String endDate;
     private String used_duration;
     private String current_state;
     private String exchange_location;
     private String user_email;
     private String image_url;
+    private String type;
 
     /**
      * Creates a good
@@ -22,14 +29,15 @@ public class Good {
      * @param title - title of the good
      * //@param availability_date - the date of which the good is available for exchange
      */
-    public Good(String title, String date, String description, String exchange_location, String user_email, String image_url){
+    public Good(String title, String startDate, String endDate, String description, String exchange_location, String user_email, String image_url, String type){
         this.title = title;
-        this.date = date;
         this.description = description;
         this.exchange_location = exchange_location;
-        this.availability_date = availability_date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.user_email = user_email;
         this.image_url = image_url;
+        this.type = type;
     }
 
     /**
@@ -39,11 +47,13 @@ public class Good {
 
     public String getDescription(){ return description; }
 
-    public String getAvailability_date(){ return availability_date; }
-
     public String getUsed_duration(){ return used_duration; }
 
     public String getUser_email(){ return user_email; }
+
+    public String getType(){return type;}
+
+    public String getAvailability_end_date(){ return endDate; }
 
     /**
      * the current state of a good could: [new, moderate, old]
@@ -61,8 +71,8 @@ public class Good {
 
     public void setDescription(String description){ this.description = description; }
 
-    public void setAvailability_date(String availability_date){
-        this.availability_date = availability_date;
+    public void setAvailability_end_date(String availability_end_date){
+        this.endDate = availability_end_date;
     }
 
     public void setUsed_duration(String used_duration){ this.used_duration = used_duration; }
@@ -75,5 +85,14 @@ public class Good {
         this.exchange_location = exchange_location;
     }
 
-    public void setImage_url(String image_url){ this.image_url = image_url; }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean isExpired(){
+        LocalDate today = LocalDate.now();
+        LocalDate enddate = LocalDate.of(Integer.parseInt(endDate.substring(0,4)),Integer.parseInt(endDate.substring(5,7)),Integer.parseInt(endDate.substring(8)));
+        if(today.isAfter(enddate)){
+            return true;
+        }
+        return false;
+    }
 }

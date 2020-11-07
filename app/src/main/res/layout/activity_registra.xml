@@ -34,15 +34,16 @@
         android:layout_marginTop="23dp"
         android:layout_marginEnd="53dp"
         android:layout_marginRight="53dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="18dp"
         android:ems="10"
         android:hint="@string/confirmPassword"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/registButton"
+        app:layout_constraintBottom_toTopOf="@+id/passwordGuidelines"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_password"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/first_password" />
 
     <EditText
         android:id="@+id/first_password"
@@ -70,31 +71,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="161dp"
         android:layout_marginLeft="161dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="162dp"
         android:layout_marginRight="162dp"
-        android:layout_marginBottom="83dp"
+        android:layout_marginBottom="49dp"
         android:text="@string/registraButton"
         app:layout_constraintBottom_toTopOf="@+id/errorMessageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/second_password" />
-
-    <TextView
-        android:id="@+id/errorText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="179dp"
-        android:layout_marginLeft="179dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="174dp"
-        android:layout_marginRight="174dp"
-        android:layout_marginBottom="29dp"
-        android:text="@string/error"
-        app:layout_constraintBottom_toTopOf="@+id/registButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/second_password" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordGuidelines"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/lastname"
@@ -136,13 +123,32 @@
         android:id="@+id/errorMessageView"
         android:layout_width="153dp"
         android:layout_height="64dp"
-        android:layout_marginStart="115dp"
-        android:layout_marginLeft="115dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginRight="143dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
         android:layout_marginBottom="106dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registButton" />
+
+    <TextView
+        android:id="@+id/passwordGuidelines"
+        android:layout_width="311dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginBottom="24dp"
+        android:text="Password must contain at least eight characters, one upper case letter, and one number."
+        app:layout_constraintBottom_toTopOf="@+id/registButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/second_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
