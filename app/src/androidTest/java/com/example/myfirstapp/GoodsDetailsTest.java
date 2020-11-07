@@ -20,40 +20,40 @@ public class GoodsDetailsTest {
     @Test
     public void testEmptyTitle() {
         onView(withId(R.id.locationText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("01/11/2020"), closeSoftKeyboard());
         onView(withId(R.id.descriptionText))
-                .perform(click(), closeSoftKeyboard())
+                .perform(scrollTo(), click(), closeSoftKeyboard())
                 .perform(typeText("My Description"));
 
         onView(withId(R.id.titleText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
-                .perform(click());
+                .perform(scrollTo(), click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a valid title.")));
     }
     @Test
     public void testEmptyDescription() {
         onView(withId(R.id.titleText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("My Title"), closeSoftKeyboard());
         onView(withId(R.id.locationText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("01/11/2020"), closeSoftKeyboard());
 
         onView(withId(R.id.descriptionText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
-                .perform(click());
+                .perform(scrollTo(), click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a description.")));
     }
@@ -61,28 +61,28 @@ public class GoodsDetailsTest {
     @Test
     public void badTestDate() {
         onView(withId(R.id.titleText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("My Title"), closeSoftKeyboard());
         onView(withId(R.id.locationText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
         onView(withId(R.id.descriptionText))
-                .perform(click(), closeSoftKeyboard())
+                .perform(scrollTo(), click(), closeSoftKeyboard())
                 .perform(typeText("My Description"), closeSoftKeyboard());
 
         onView(withId(R.id.dateText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
-                .perform(click());
+                .perform(scrollTo(), click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a valid date.")));
 
         onView(withId(R.id.dateText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("1/11/2020"), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
-                .perform(click());
+                .perform(scrollTo(), click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a valid date.")));
 
@@ -90,39 +90,39 @@ public class GoodsDetailsTest {
     @Test
     public void testEmptyLocation() {
         onView(withId(R.id.titleText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("My Title"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("01/11/2020"), closeSoftKeyboard());
         onView(withId(R.id.descriptionText))
-                .perform(click(), closeSoftKeyboard())
+                .perform(scrollTo(), click(), closeSoftKeyboard())
                 .perform(typeText("My Description"), closeSoftKeyboard());
 
         onView(withId(R.id.locationText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
-                .perform(click());
+                .perform(scrollTo(), click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("Error: Enter a location.")));
     }
     @Test
     public void testValidDetails() {
         onView(withId(R.id.titleText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("My Title"), closeSoftKeyboard());
         onView(withId(R.id.locationText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("123 My Street Halifax NS"), closeSoftKeyboard());
         onView(withId(R.id.dateText))
-                .perform(click())
+                .perform(scrollTo(), click())
                 .perform(typeText("01/11/2020"), closeSoftKeyboard());
         onView(withId(R.id.descriptionText))
-                .perform(click(), closeSoftKeyboard())
+                .perform(scrollTo(), click(), closeSoftKeyboard())
                 .perform(typeText("My Description"), closeSoftKeyboard());
         onView(withId(R.id.submitGoodButton))
-                .perform(click());
+                .perform(scrollTo(), click());
         onView(withId(R.id.errorMessageTextView))
                 .check(matches(withText("")));
     }

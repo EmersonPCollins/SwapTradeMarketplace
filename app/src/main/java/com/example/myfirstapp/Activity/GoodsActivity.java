@@ -1,21 +1,37 @@
 package com.example.myfirstapp.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.myfirstapp.domain.*;
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.service.DatabaseService;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GoodsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -24,11 +40,33 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private EditText locationText;
     private EditText descriptionText;
     private TextView errorMessage;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ImageView goodImage;
+    private String imageURL;
+    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods);
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        Button button = (Button) findViewById(R.id.ImageUploadButton);
+        goodImage = (ImageView) findViewById(R.id.good_image);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+                    System.out.println(MediaStore.Images.ImageColumns.DATA);
+                }catch (Exception e){
+                    System.out.println("error -> " + e.toString());
+                }
+            }
+        });
 
         Spinner spinner = findViewById(R.id.categoriesSpinner);
 
@@ -54,6 +92,49 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            goodImage.setImageBitmap(imageBitmap);
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "JPEG_" + timeStamp + ".jpeg";
+
+            uploadImageToFirebase(imageFileName, imageBitmap);
+        }
+
+    }
+
+    private void uploadImageToFirebase(String imageFileName, Bitmap imageBitmap) {
+        final StorageReference imageReference = storageReference.child("images/" + imageFileName);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageReference.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // Handle successful uploads
+                //imageReference.getDownloadUrl(););
+                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        imageURL = uri.toString();
+                    }
+                });
+            }
+        });
     }
 
     private boolean validateTitle(String titleInput){
@@ -99,7 +180,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         String locationInput = locationText.getText().toString().trim();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(dateInput) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, dateInput, descriptionInput, locationInput, "email@example.com", "temporary placeholder");
+            insertGood(titleInput, dateInput, descriptionInput, locationInput, "email@example.com", imageURL);
         }
 
     }
@@ -117,8 +198,8 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         return true;
     }
 
-    public void insertGood(String title, String date, String description, String location, String email, String type){
-        Good good = new Good(title, date, description, location, email, type);
+    public void insertGood(String title, String date, String description, String location, String email, String imageURL){
+        Good good = new Good(title, date, description, location, email, imageURL);
         //get the db connection
         DatabaseService db = new DatabaseService();
         db.writeGood(good);

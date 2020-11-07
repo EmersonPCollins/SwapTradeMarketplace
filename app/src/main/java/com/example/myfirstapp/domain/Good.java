@@ -14,7 +14,7 @@ public class  Good {
     private String current_state;
     private String exchange_location;
     private String user_email;
-    private String type;
+    private String image_url;
 
     /**
      * Creates a good
@@ -22,14 +22,14 @@ public class  Good {
      * @param title - title of the good
      * //@param availability_date - the date of which the good is available for exchange
      */
-    public Good(String title, String date, String description, String exchange_location, String user_email, String type){
+    public Good(String title, String date, String description, String exchange_location, String user_email, String image_url){
         this.title = title;
         this.date = date;
         this.description = description;
         this.exchange_location = exchange_location;
         this.availability_date = availability_date;
         this.user_email = user_email;
-        this.type = type;
+        this.image_url = image_url;
     }
 
     /**
@@ -52,7 +52,7 @@ public class  Good {
 
     public String getExchange_location(){ return exchange_location; }
 
-    public String getType() { return type; }
+    public String getImage_url(){ return image_url; }
 
     /**
      * Setters
@@ -75,5 +75,5 @@ public class  Good {
         this.exchange_location = exchange_location;
     }
 
-    public void setType(String type) { this.type = type; }
+    public void setImage_url(String image_url){ this.image_url = image_url; }
 }
