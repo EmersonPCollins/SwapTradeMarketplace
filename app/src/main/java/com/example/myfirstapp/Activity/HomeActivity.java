@@ -1,5 +1,6 @@
 package com.example.myfirstapp.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signed_in);
+
+        TextView welcomeMessage = (TextView) findViewById(R.id.welcomeMessage);
+        SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+        String storedEmail = preference.getString("email", "");
+        welcomeMessage.setText("Welcome " + storedEmail + "!");
+
 
         Button provideGoods = findViewById(R.id.provideButton);
         provideGoods.setOnClickListener(new View.OnClickListener() {
