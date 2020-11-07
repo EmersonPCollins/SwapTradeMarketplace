@@ -14,7 +14,7 @@ public class Good {
 
     private String title;
     private String description;
-    private String date;
+    private LocalDate date;
     private String availability_end_date;
     private String used_duration;
     private String current_state;
@@ -28,12 +28,13 @@ public class Good {
      * @param title - title of the good
      * //@param availability_date - the date of which the good is available for exchange
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Good(String title, String date, String description, String exchange_location, String user_email){
         this.title = title;
-        this.date = date;
+        this.date = LocalDate.now();
         this.description = description;
         this.exchange_location = exchange_location;
-        //this.availability_end_date = availability_end_date;
+        this.availability_end_date = date;
         this.user_email = user_email;
         expired = false;
     }
@@ -80,8 +81,7 @@ public class Good {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public LocalDate isExpired(String loc){
-        availability_end_date = loc;
+    public LocalDate isExpired(){
         LocalDate today = LocalDate.now();
         LocalDate enddate = LocalDate.of(Integer.parseInt(availability_end_date.substring(0,4)),Integer.parseInt(availability_end_date.substring(5,7)),Integer.parseInt(availability_end_date.substring(8)));
         return enddate;
