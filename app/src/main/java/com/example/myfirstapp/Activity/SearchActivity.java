@@ -32,7 +32,7 @@ public class SearchActivity extends AppCompatActivity {
         displayGoods(goods);
     }
 
-    private void displayGoods(ArrayList<Good> goods) {
+    public static void displayGoods(ArrayList<Good> goods) {
 
     }
 }
