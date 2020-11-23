@@ -40,6 +40,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="410dp"
         android:layout_height="447dp"
         android:layout_marginStart="1dp"
@@ -49,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoriesSearchSpinner">
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -447,7 +448,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+        </LinearLayout>-->
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

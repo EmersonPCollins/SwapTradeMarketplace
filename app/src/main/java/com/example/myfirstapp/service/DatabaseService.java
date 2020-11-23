@@ -113,8 +113,10 @@ public class DatabaseService {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Good good = snapshot.getValue(Good.class);
-                goods.add(good);
+                for (DataSnapshot adSnapshot : snapshot.getChildren()) {
+                    Good good = snapshot.getValue(Good.class);
+                    goods.add(good);
+                }
             }
 
             @Override

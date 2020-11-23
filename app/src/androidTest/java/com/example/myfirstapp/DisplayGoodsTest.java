@@ -42,4 +42,6 @@ public class DisplayGoodsTest {
         onView(withId(R.id.goodName))
                 .check(matches(withText(title)));
     }
+
+
 }
