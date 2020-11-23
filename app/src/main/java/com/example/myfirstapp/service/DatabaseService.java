@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.myfirstapp.Activity.HomeActivity;
 import com.example.myfirstapp.MainActivity;
 import com.example.myfirstapp.domain.Good;
+import com.example.myfirstapp.domain.RequestNotification;
 import com.example.myfirstapp.domain.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +23,7 @@ public class DatabaseService {
     private FirebaseDatabase database;
     private static String userLocation = "users";
     private String goodLocation = "goods";
+    private String requestNotificationLocation = "requestsAndNotifications";
 
     public DatabaseService(FirebaseDatabase database) {
         this.database = database;
@@ -65,6 +67,12 @@ public class DatabaseService {
         DatabaseReference ref = database.getReference(goodLocation);
 
         ref.child(good.getId()).setValue(good);
+    }
+
+    public void writeRequestNotification(RequestNotification requestNotification) {
+        DatabaseReference ref = database.getReference(requestNotificationLocation);
+
+        ref.child(requestNotification.getRequestingEmail() + requestNotification.getNotifiedEmail()).setValue(requestNotification);
     }
 
     public ArrayList<Good> readGoods(final String title, final String location, final String type) {
