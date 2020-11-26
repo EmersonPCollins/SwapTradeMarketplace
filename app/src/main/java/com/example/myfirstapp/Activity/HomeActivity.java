@@ -52,6 +52,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivityForResult(myIntent, 0);
             }
         });
+
+        Button notifications = findViewById(R.id.notificationButton);
+        notifications.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), NotificationsActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
     }
 
 

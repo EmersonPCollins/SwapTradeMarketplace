@@ -24,6 +24,7 @@
         <activity android:name="com.example.myfirstapp.Activity.SearchActivity"></activity>
         <activity android:name="com.example.myfirstapp.Activity.GoodsActivity"/>
         <activity android:name="com.example.myfirstapp.Activity.SettingsActivity"/>
+        <activity android:name="com.example.myfirstapp.Activity.NotificationsActivity"/>
     </application>
 
 </manifest>
