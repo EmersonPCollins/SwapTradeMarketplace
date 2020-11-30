@@ -94,15 +94,4 @@ public class Good {
     public void setExchange_location(String exchange_location){
         this.exchange_location = exchange_location;
     }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean isExpired(){
-        LocalDate today = LocalDate.now();
-        LocalDate enddate = LocalDate.of(Integer.parseInt(endDate.substring(0,4)),Integer.parseInt(endDate.substring(5,7)),Integer.parseInt(endDate.substring(8)));
-        if(today.isAfter(enddate)){
-            return true;
-        }
-        return false;
-    }
 }
