@@ -183,7 +183,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         LocalDate startDate = LocalDate.now();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(endDate) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", "url", "type");
+            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", imageURL, "type");
         }
 
     }
