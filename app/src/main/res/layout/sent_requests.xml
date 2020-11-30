@@ -28,8 +28,8 @@
 
                 <ImageView
                     android:id="@+id/goodImage1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="34dp"
                     android:layout_marginLeft="34dp"
                     android:layout_marginTop="30dp"
@@ -43,53 +43,73 @@
                     android:id="@+id/goodName1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Good Name"
-                    tools:layout_conversion_absoluteHeight="19dp"
-                    tools:layout_conversion_absoluteWidth="97dp"
-                    tools:layout_editor_absoluteX="216dp"
-                    tools:layout_editor_absoluteY="33dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="40dp"
+                    android:text="Good Name"
                     app:layout_constraintStart_toEndOf="@+id/goodImage1"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="50dp" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="97dp" />
 
                 <TextView
                     android:id="@+id/user1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User's name"
-                    tools:layout_conversion_absoluteHeight="19dp"
-                    tools:layout_conversion_absoluteWidth="109dp"
-                    tools:layout_editor_absoluteX="216dp"
-                    tools:layout_editor_absoluteY="69dp"
-                    app:layout_constraintTop_toTopOf="@id/goodName1"
+                    android:layout_width="141dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Description of good"
                     app:layout_constraintStart_toEndOf="@+id/goodImage1"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="30dp" />
+                    app:layout_constraintTop_toTopOf="@id/goodName1"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="109dp" />
 
-                <TextView
+                <!--TextView
                     android:id="@+id/status1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status: "
-                    tools:layout_conversion_absoluteHeight="19dp"
-                    tools:layout_conversion_absoluteWidth="19dp"
-                    tools:layout_editor_absoluteX="257dp"
-                    tools:layout_editor_absoluteY="104dp"
-                    app:layout_constraintTop_toTopOf="@id/user1"
-                    app:layout_constraintStart_toEndOf="@+id/goodImage1"
                     android:layout_marginLeft="38dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp"
+                    android:text="Status: "
+                    app:layout_constraintStart_toEndOf="@+id/goodImage1"
+                    app:layout_constraintTop_toBottomOf="@+id/goodDescription1"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="19dp" /-->
+
+                <Button
+                    android:id="@+id/acceptButton"
+                    android:layout_width="80dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="19dp"
+                    android:layout_marginRight="34dp"
+                    android:background="@android:color/holo_green_light"
+                    android:text="Accept"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/declineButton"
+                    android:layout_width="80dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginEnd="19dp"
+                    android:layout_marginRight="34dp"
+                    android:background="@android:color/holo_red_light"
+                    android:text="Decline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/acceptButton" />
 
                 <ImageView
                     android:id="@+id/goodImage2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="34dp"
                     android:layout_marginLeft="34dp"
-                    android:layout_marginTop="170dp"
+                    android:layout_marginTop="180dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/goodImage1"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:layout_conversion_absoluteHeight="128dp"
                     tools:layout_conversion_absoluteWidth="128dp"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -98,31 +118,31 @@
                     android:id="@+id/goodName2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Good Name"
+                    android:text="Good Name"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="97dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="33dp"
-                    app:layout_constraintTop_toTopOf="@id/goodName1"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/goodImage2"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="170dp" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="190dp" />
 
                 <TextView
                     android:id="@+id/user2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User's name"
+                    android:layout_width="141dp"
+                    android:layout_height="56dp"
+                    android:text="Description of good"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="109dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="69dp"
                     app:layout_constraintTop_toTopOf="@id/goodName2"
                     app:layout_constraintStart_toEndOf="@id/goodImage2"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp" />
 
-                <TextView
+                <!--TextView
                     android:id="@+id/status2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,18 +153,30 @@
                     tools:layout_editor_absoluteY="104dp"
                     app:layout_constraintTop_toTopOf="@id/user2"
                     app:layout_constraintStart_toEndOf="@id/goodImage2"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp" /-->
+
+                <Button
+                    android:id="@+id/requestedButton"
+                    android:layout_width="80dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="19dp"
+                    android:layout_marginRight="19dp"
+                    android:background="@android:color/holo_purple"
+                    android:text="Requested"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/declineButton" />
 
                 <ImageView
                     android:id="@+id/goodImage3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="34dp"
                     android:layout_marginLeft="34dp"
-                    android:layout_marginTop="170dp"
+                    android:layout_marginTop="330dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/goodImage2"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:layout_conversion_absoluteHeight="128dp"
                     tools:layout_conversion_absoluteWidth="128dp"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -153,31 +185,31 @@
                     android:id="@+id/goodName3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Good Name"
+                    android:text="Good Name"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="97dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="33dp"
-                    app:layout_constraintTop_toTopOf="@id/goodName2"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/goodImage3"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="170dp" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="340dp" />
 
                 <TextView
                     android:id="@+id/user3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User's name"
+                    android:layout_width="141dp"
+                    android:layout_height="56dp"
+                    android:text="Description of good"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="109dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="69dp"
                     app:layout_constraintTop_toTopOf="@id/goodName3"
                     app:layout_constraintStart_toEndOf="@id/goodImage3"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp" />
 
-                <TextView
+                <!--TextView
                     android:id="@+id/status3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -189,17 +221,17 @@
                     app:layout_constraintTop_toTopOf="@id/user3"
                     app:layout_constraintStart_toEndOf="@id/goodImage3"
                     android:layout_marginLeft="38dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp" /-->
 
                 <ImageView
                     android:id="@+id/goodImage4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="34dp"
                     android:layout_marginLeft="34dp"
-                    android:layout_marginTop="170dp"
+                    android:layout_marginTop="480dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/goodImage3"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:layout_conversion_absoluteHeight="128dp"
                     tools:layout_conversion_absoluteWidth="128dp"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -208,31 +240,31 @@
                     android:id="@+id/goodName4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Good Name"
+                    android:text="Good Name"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="97dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="33dp"
-                    app:layout_constraintTop_toTopOf="@id/goodName3"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/goodImage4"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="170dp" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="490dp" />
 
                 <TextView
                     android:id="@+id/user4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User's name"
+                    android:layout_width="141dp"
+                    android:layout_height="56dp"
+                    android:text="Description of good"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="109dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="69dp"
                     app:layout_constraintTop_toTopOf="@id/goodName4"
                     app:layout_constraintStart_toEndOf="@id/goodImage4"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp" />
 
-                <TextView
+                <!--TextView
                     android:id="@+id/status4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -244,17 +276,17 @@
                     app:layout_constraintTop_toTopOf="@id/user4"
                     app:layout_constraintStart_toEndOf="@id/goodImage4"
                     android:layout_marginLeft="38dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp" /-->
 
                 <ImageView
                     android:id="@+id/goodImage5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="34dp"
                     android:layout_marginLeft="34dp"
-                    android:layout_marginTop="170dp"
+                    android:layout_marginTop="630dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/goodImage4"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:layout_conversion_absoluteHeight="128dp"
                     tools:layout_conversion_absoluteWidth="128dp"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -263,31 +295,31 @@
                     android:id="@+id/goodName5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Good Name"
+                    android:text="Good Name"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="97dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="33dp"
-                    app:layout_constraintTop_toTopOf="@id/goodName4"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/goodImage5"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="170dp" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="640dp" />
 
                 <TextView
                     android:id="@+id/user5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User's name"
+                    android:layout_width="141dp"
+                    android:layout_height="56dp"
+                    android:text="Description of good"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="109dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="69dp"
                     app:layout_constraintTop_toTopOf="@id/goodName5"
                     app:layout_constraintStart_toEndOf="@id/goodImage5"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp" />
 
-                <TextView
+                <!--TextView
                     android:id="@+id/status5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -299,15 +331,15 @@
                     app:layout_constraintTop_toTopOf="@id/user5"
                     app:layout_constraintStart_toEndOf="@id/goodImage5"
                     android:layout_marginLeft="38dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp" /-->
 
                 <ImageView
                     android:id="@+id/goodImage6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="34dp"
                     android:layout_marginLeft="34dp"
-                    android:layout_marginTop="170dp"
+                    android:layout_marginTop="780dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/goodImage5"
                     tools:layout_conversion_absoluteHeight="128dp"
@@ -318,31 +350,31 @@
                     android:id="@+id/goodName6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Good Name"
+                    android:text="Good Name"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="97dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="33dp"
-                    app:layout_constraintTop_toTopOf="@id/goodName5"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/goodImage6"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="170dp" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="790dp" />
 
                 <TextView
                     android:id="@+id/user6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User's name"
+                    android:layout_width="141dp"
+                    android:layout_height="56dp"
+                    android:text="Description of good"
                     tools:layout_conversion_absoluteHeight="19dp"
                     tools:layout_conversion_absoluteWidth="109dp"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="69dp"
                     app:layout_constraintTop_toTopOf="@id/goodName6"
                     app:layout_constraintStart_toEndOf="@id/goodImage6"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp" />
 
-                <TextView
+                <!--TextView
                     android:id="@+id/status6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -354,7 +386,7 @@
                     app:layout_constraintTop_toTopOf="@id/user6"
                     app:layout_constraintStart_toEndOf="@id/goodImage6"
                     android:layout_marginLeft="38dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp" /-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
