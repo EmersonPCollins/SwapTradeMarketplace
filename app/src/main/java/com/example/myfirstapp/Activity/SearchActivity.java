@@ -40,7 +40,13 @@ public class SearchActivity extends AppCompatActivity {
 
         readAllGoods();
 
-class
+        //if request button is pressed confirm
+        AlertDialog.Builder confirmRequest;
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     public void readAllGoods() {
