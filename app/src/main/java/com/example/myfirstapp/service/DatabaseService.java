@@ -72,7 +72,7 @@ public class DatabaseService {
     public void writeRequestNotification(RequestNotification requestNotification) {
         DatabaseReference ref = database.getReference(requestNotificationLocation);
 
-        ref.child(requestNotification.getRequestingEmail() + requestNotification.getNotifiedEmail()).setValue(requestNotification);
+        ref.child(requestNotification.getId()).setValue(requestNotification);
     }
 
     public ArrayList<Good> readGoods(final String title, final String location, final String type) {
