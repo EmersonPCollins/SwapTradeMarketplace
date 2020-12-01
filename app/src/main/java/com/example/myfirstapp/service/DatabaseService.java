@@ -23,7 +23,7 @@ public class DatabaseService {
     private FirebaseDatabase database;
     private static String userLocation = "users";
     private String goodLocation = "goods";
-    private String requestNotificationLocation = "requestsAndNotifications";
+    private String requestNotificationLocation = "requests";
 
     public DatabaseService(FirebaseDatabase database) {
         this.database = database;
