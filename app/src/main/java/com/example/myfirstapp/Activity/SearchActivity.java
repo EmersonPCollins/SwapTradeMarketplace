@@ -1,9 +1,11 @@
 package com.example.myfirstapp.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirstapp.R;
@@ -29,12 +32,15 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
+    Button requestButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
         readAllGoods();
+
+class
     }
 
     public void readAllGoods() {
@@ -72,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
             ImageView goodImage = getImage(good.getImage_url());
             ll.addView(goodImage);
 
-            Button requestButton = new Button(this);
+            requestButton = new Button(this);
             requestButton.setText("Request");
             ll.addView(requestButton);
 
