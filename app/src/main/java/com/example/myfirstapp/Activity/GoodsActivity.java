@@ -25,6 +25,7 @@ import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.service.DatabaseService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -182,7 +183,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         LocalDate startDate = LocalDate.now();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(endDate) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", "url", "type");
+            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", imageURL, "type");
         }
 
     }
@@ -202,9 +203,15 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     public void insertGood(String title, String startDate, String endDate, String description, String location, String email, String imageURL, String type){
         Good good = new Good(title, startDate, endDate, description, location, email, imageURL, type);
-        //get the db connection
-        DatabaseService db = new DatabaseService();
+        DatabaseService db = new DatabaseService(FirebaseDatabase.getInstance());
         db.writeGood(good);
+
+        returnToHomePage();
+    }
+
+    private void returnToHomePage() {
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
     }
 
 }
