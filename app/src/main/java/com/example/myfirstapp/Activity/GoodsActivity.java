@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -181,9 +182,13 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         String descriptionInput = descriptionText.getText().toString().trim();
         String locationInput = locationText.getText().toString().trim();
         LocalDate startDate = LocalDate.now();
+        SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+        String storedEmail = preference.getString("email", "");
+        Spinner spinner = (Spinner)findViewById(R.id.categoriesSpinner);
+        String type = spinner.getSelectedItem().toString();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(endDate) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", imageURL, "type");
+            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, storedEmail, imageURL, type);
         }
 
     }
