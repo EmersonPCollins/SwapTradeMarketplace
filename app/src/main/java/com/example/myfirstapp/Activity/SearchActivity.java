@@ -44,8 +44,15 @@ public class SearchActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot adSnapshot : snapshot.getChildren()) {
-                    Good good = snapshot.getValue(Good.class);
+                for (DataSnapshot messageSnapshot: snapshot.getChildren()) {
+                    String title = (String) messageSnapshot.child("title").getValue();
+                    String date = (String) messageSnapshot.child("availability_end_date").getValue();
+                    String description = (String) messageSnapshot.child("description").getValue();
+                    String location = (String) messageSnapshot.child("exchange_location").getValue();
+                    String user = (String) messageSnapshot.child("user_email").getValue();
+                    String url = (String) messageSnapshot.child("image_url").getValue();
+                    String type = (String) messageSnapshot.child("type").getValue();
+                    Good good = new Good(title, null, date, description, location, user, url, type);
                     goods.add(good);
                 }
                 displayGoods(goods);
@@ -93,23 +100,21 @@ public class SearchActivity extends AppCompatActivity {
     private ImageView getImage(String url) {
         final ImageView goodImage = new ImageView(this);
         if (url == null) return goodImage;
-        StorageReference goodImageReference = FirebaseStorage.getInstance().getReference(url);
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference goodImageReference = storageReference.child("images/JPEG_20201202_085405.jpeg");
+
         final long ONE_MEGABYTE = 1024 * 1024;
         goodImageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                DisplayMetrics dm = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(dm);
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                goodImage.setImageBitmap(bmp);
 
-                goodImage.setMinimumHeight(dm.heightPixels);
-                goodImage.setMinimumWidth(dm.widthPixels);
-                goodImage.setImageBitmap(bm);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-
             }
         });
 
