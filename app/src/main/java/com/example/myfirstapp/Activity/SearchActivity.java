@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -81,7 +82,8 @@ public class SearchActivity extends AppCompatActivity {
 
             Button requestButton = new Button(this);
             requestButton.setText("Request");
-            ll.addView(requestButton);
+            LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(500, 100);
+            ll.addView(requestButton,layoutParams2);
 
             TextView goodLocation = new TextView(this);
             goodLocation.setText(good.getExchange_location());
@@ -93,7 +95,11 @@ public class SearchActivity extends AppCompatActivity {
 
             TextView goodDescription = new TextView(this);
             goodDescription.setText(good.getDescription());
-            ll.addView(goodDescription);
+            //ll.addView(goodDescription);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 100);
+            layoutParams.setMargins(0, 0, 0, 20);
+            ll.addView(goodDescription,layoutParams);
+
         }
     }
 
