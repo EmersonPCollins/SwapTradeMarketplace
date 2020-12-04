@@ -69,6 +69,12 @@ public class DatabaseService {
         ref.child(good.getId()).setValue(good);
     }
 
+    public void removeRequestNotification(String id){
+        DatabaseReference ref = database.getReference(requestNotificationLocation + "/" + id);
+
+        ref.removeValue();
+    }
+
     public void writeRequestNotification(RequestNotification requestNotification) {
         DatabaseReference ref = database.getReference(requestNotificationLocation);
 
