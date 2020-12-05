@@ -2,8 +2,11 @@ package com.example.myfirstapp.Activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -70,11 +73,15 @@ public class SearchActivity extends AppCompatActivity {
         ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
+        ll.setGravity(Gravity.CENTER);
         sv.addView(ll);
 
         for (Good good: goods) {
             TextView goodName = new TextView(this);
             goodName.setText(good.getTitle());
+            goodName.setTextColor(Color.BLUE);
+            goodName.setTextSize(18);
+            goodName.setGravity(Gravity.CENTER);
             ll.addView(goodName);
 
             ImageView goodImage = getImage(good.getImage_url());
@@ -87,14 +94,17 @@ public class SearchActivity extends AppCompatActivity {
 
             TextView goodLocation = new TextView(this);
             goodLocation.setText(good.getExchange_location());
+            goodLocation.setGravity(Gravity.CENTER);
             ll.addView(goodLocation);
 
             TextView goodType = new TextView(this);
             goodType.setText(good.getType());
+            goodType.setGravity(Gravity.CENTER);
             ll.addView(goodType);
 
             TextView goodDescription = new TextView(this);
             goodDescription.setText(good.getDescription());
+            goodDescription.setGravity(Gravity.CENTER);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 100);
             layoutParams.setMargins(0, 0, 0, 40);
             ll.addView(goodDescription,layoutParams);
