@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.myfirstapp.Activity.HomeActivity;
 import com.example.myfirstapp.MainActivity;
 import com.example.myfirstapp.domain.Good;
+import com.example.myfirstapp.domain.RequestNotification;
 import com.example.myfirstapp.domain.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +23,7 @@ public class DatabaseService {
     private FirebaseDatabase database;
     private static String userLocation = "users";
     private String goodLocation = "goods";
+    private String requestNotificationLocation = "requests";
 
     public DatabaseService(FirebaseDatabase database) {
         this.database = database;
@@ -67,6 +69,12 @@ public class DatabaseService {
         ref.child(good.getId()).setValue(good);
     }
 
+    public void writeRequestNotification(RequestNotification requestNotification) {
+        DatabaseReference ref = database.getReference(requestNotificationLocation);
+
+        ref.child(requestNotification.getId()).setValue(requestNotification);
+    }
+
     public ArrayList<Good> readGoods(final String title, final String location, final String type) {
         final ArrayList<Good> goods = new ArrayList<>();
         DatabaseReference ref = database.getReference(goodLocation);
@@ -93,6 +101,28 @@ public class DatabaseService {
                         continue;
                     }
 
+                    goods.add(good);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return goods;
+    }
+
+    public ArrayList<Good> readAllGoods() {
+        final ArrayList<Good> goods = new ArrayList<>();
+        DatabaseReference ref = database.getReference(goodLocation);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot adSnapshot : snapshot.getChildren()) {
+                    Good good = snapshot.getValue(Good.class);
                     goods.add(good);
                 }
             }
