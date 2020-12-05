@@ -95,9 +95,8 @@ public class SearchActivity extends AppCompatActivity {
 
             TextView goodDescription = new TextView(this);
             goodDescription.setText(good.getDescription());
-            //ll.addView(goodDescription);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 100);
-            layoutParams.setMargins(0, 0, 0, 20);
+            layoutParams.setMargins(0, 0, 0, 40);
             ll.addView(goodDescription,layoutParams);
 
         }
@@ -108,7 +107,7 @@ public class SearchActivity extends AppCompatActivity {
         if (url == null) return goodImage;
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference goodImageReference = storageReference.child("images/JPEG_20201202_085405.jpeg");
+        StorageReference goodImageReference = storageReference.child("images/" + url);
 
         final long ONE_MEGABYTE = 1024 * 1024;
         goodImageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
