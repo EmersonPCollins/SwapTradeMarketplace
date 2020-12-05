@@ -44,20 +44,6 @@ public class MainActivity extends AppCompatActivity {
         final Button registerButton = findViewById(R.id.newRegisterButton);
         final TextView errorText = (TextView) findViewById(R.id.errorText);
 
-        Button test = findViewById(R.id.test_email);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            Intent email = new Intent(Intent.ACTION_SEND);
-            email.putExtra(Intent.EXTRA_EMAIL, new String[]{"bennma14@gmail.com"}); //recipient email
-            email.putExtra(Intent.EXTRA_SUBJECT, "accepted request"); //subject
-            email.putExtra(Intent.EXTRA_TEXT, "your request for [insert here owner of product email]'s product has been accepted"); //body
-
-            email.setType("message/rfc822");
-            startActivity(Intent.createChooser(email, "Choose an Email client :"));
-            }
-        });
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

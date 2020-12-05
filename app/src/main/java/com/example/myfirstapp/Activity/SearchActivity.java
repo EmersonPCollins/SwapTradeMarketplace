@@ -1,5 +1,7 @@
 package com.example.myfirstapp.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
@@ -22,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.domain.Good;
+import com.example.myfirstapp.domain.RequestNotification;
+import com.example.myfirstapp.service.DatabaseService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -126,7 +130,7 @@ public class SearchActivity extends AppCompatActivity {
 
         ll.removeAllViews();
 
-        for (Good good: goods) {
+        for (final Good good: goods) {
             TextView goodName = new TextView(this);
             goodName.setText(good.getTitle());
             goodName.setTextColor(Color.BLUE);
@@ -141,6 +145,18 @@ public class SearchActivity extends AppCompatActivity {
             requestButton.setText("Request");
             LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(500, 100);
             ll.addView(requestButton,layoutParams2);
+
+            requestButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+                    String loggedinUser = preference.getString("email", "");
+
+                    RequestNotification request = new RequestNotification(loggedinUser, good.getUser_email(), good.getId(), good.getTitle(), good.getExchange_location());
+                    DatabaseService db = new DatabaseService();
+                    db.writeRequestNotification(request);
+                }
+            });
 
             TextView goodLocation = new TextView(this);
             goodLocation.setText(good.getExchange_location());
