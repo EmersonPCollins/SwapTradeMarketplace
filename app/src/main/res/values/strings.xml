@@ -25,4 +25,9 @@
         <item>Toys</item>
         <item>Video Games and Consoles</item>
     </string-array>
+
+    <string-array name="locations">
+        <item>Halifax</item>
+        <item>Toronto</item>
+    </string-array>
 </resources>
