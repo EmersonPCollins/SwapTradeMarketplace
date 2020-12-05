@@ -7,6 +7,17 @@
     android:layout_height="match_parent">
 
     <Spinner
+        android:id="@+id/locationSearchSpinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/locations"
+        app:layout_constraintStart_toEndOf="@+id/categoriesSearch"
+        app:layout_constraintTop_toBottomOf="@+id/searchField" />
+
+    <Spinner
         android:id="@+id/categoriesSearchSpinner"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -29,6 +40,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchField" />
 
+    <TextView
+        android:id="@+id/locationSearch"
+        android:layout_width="67dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="60dp"
+        android:text="Location:"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchField" />
+
     <SearchView
         android:id="@+id/searchField"
         android:layout_width="324dp"
@@ -40,6 +63,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="410dp"
         android:layout_height="447dp"
         android:layout_marginStart="1dp"
@@ -47,9 +71,9 @@
         android:layout_marginTop="21dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoriesSearchSpinner">
+        app:layout_constraintTop_toBottomOf="@+id/locationSearchSpinner">
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -447,7 +471,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+        </LinearLayout>-->
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
