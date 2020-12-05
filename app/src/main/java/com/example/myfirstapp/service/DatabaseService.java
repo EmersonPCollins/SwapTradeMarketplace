@@ -114,4 +114,26 @@ public class DatabaseService {
         return goods;
     }
 
+    public ArrayList<Good> readAllGoods() {
+        final ArrayList<Good> goods = new ArrayList<>();
+        DatabaseReference ref = database.getReference(goodLocation);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot adSnapshot : snapshot.getChildren()) {
+                    Good good = snapshot.getValue(Good.class);
+                    goods.add(good);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return goods;
+    }
+
 }
