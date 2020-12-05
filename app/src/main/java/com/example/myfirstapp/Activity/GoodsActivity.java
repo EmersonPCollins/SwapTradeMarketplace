@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AlertDialog;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -38,8 +36,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-import android.widget.Toast;
-
 public class GoodsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText titleText;
@@ -51,7 +47,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private ImageView goodImage;
     private String imageURL;
     StorageReference storageReference;
-    AlertDialog.Builder builder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,18 +211,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         DatabaseService db = new DatabaseService(FirebaseDatabase.getInstance());
         db.writeGood(good);
 
-        builder = new AlertDialog.Builder(this);
-
-        builder.setMessage("Good has been successfully submitted")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        returnToHomePage();
-                    }
-                });
-        AlertDialog popwindow = builder.create();
-        popwindow.show();
-
+        returnToHomePage();
     }
 
     private void returnToHomePage() {
