@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -46,6 +49,7 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private ImageView goodImage;
     private String imageURL;
     StorageReference storageReference;
+    AlertDialog.Builder builder;
 
 
     @Override
@@ -181,9 +185,13 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         String descriptionInput = descriptionText.getText().toString().trim();
         String locationInput = locationText.getText().toString().trim();
         LocalDate startDate = LocalDate.now();
+        SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+        String storedEmail = preference.getString("email", "");
+        Spinner spinner = (Spinner)findViewById(R.id.categoriesSpinner);
+        String type = spinner.getSelectedItem().toString();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(endDate) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", imageURL, "type");
+            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, storedEmail, imageURL, type);
         }
 
     }
@@ -206,7 +214,18 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         DatabaseService db = new DatabaseService(FirebaseDatabase.getInstance());
         db.writeGood(good);
 
-        returnToHomePage();
+        builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Good has been successfully submitted")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        returnToHomePage();
+                    }
+                });
+        AlertDialog popwindow = builder.create();
+        popwindow.show();
+
     }
 
     private void returnToHomePage() {
