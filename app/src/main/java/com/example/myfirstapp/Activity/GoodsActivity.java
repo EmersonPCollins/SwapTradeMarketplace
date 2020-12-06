@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -45,7 +48,9 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView goodImage;
     private String imageURL;
+    private String imageFileName;
     StorageReference storageReference;
+    AlertDialog.Builder builder;
 
 
     @Override
@@ -85,7 +90,6 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-    // Currently this saves the text of the selected category
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String text = adapterView.getItemAtPosition(i).toString();
@@ -105,14 +109,14 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             goodImage.setImageBitmap(imageBitmap);
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "JPEG_" + timeStamp + ".jpeg";
+            imageFileName = "JPEG_" + timeStamp + ".jpeg";
 
-            uploadImageToFirebase(imageFileName, imageBitmap);
+            uploadImageToFirebase(imageBitmap);
         }
 
     }
 
-    private void uploadImageToFirebase(String imageFileName, Bitmap imageBitmap) {
+    private void uploadImageToFirebase(Bitmap imageBitmap) {
         final StorageReference imageReference = storageReference.child("images/" + imageFileName);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -181,9 +185,13 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         String descriptionInput = descriptionText.getText().toString().trim();
         String locationInput = locationText.getText().toString().trim();
         LocalDate startDate = LocalDate.now();
+        SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+        String storedEmail = preference.getString("email", "");
+        Spinner spinner = (Spinner)findViewById(R.id.categoriesSpinner);
+        String type = spinner.getSelectedItem().toString();
 
         if(validateTitle(titleInput) && validateLocation(locationInput) && validateDate(endDate) && validateDescription(descriptionInput)) {
-            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, "email@example.com", "url", "type");
+            insertGood(titleInput, startDate.toString(), endDate, descriptionInput, locationInput, storedEmail, imageFileName, type);
         }
 
     }
@@ -206,7 +214,18 @@ public class GoodsActivity extends AppCompatActivity implements AdapterView.OnIt
         DatabaseService db = new DatabaseService(FirebaseDatabase.getInstance());
         db.writeGood(good);
 
-        returnToHomePage();
+        builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Good has been successfully submitted")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        returnToHomePage();
+                    }
+                });
+        AlertDialog popwindow = builder.create();
+        popwindow.show();
+
     }
 
     private void returnToHomePage() {
