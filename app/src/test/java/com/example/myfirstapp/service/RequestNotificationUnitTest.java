@@ -18,7 +18,7 @@ public class RequestNotificationUnitTest{
         Good desired = new Good("antique doll", LocalDate.now().toString(),"2021-05-11","have been taken care of for years",
                 "location","laura@yahoo.com","url", "type");
 
-        RequestNotification reqNot = new RequestNotification(requesting.getEmail(), notified.getEmail(), desired.getId());
+        RequestNotification reqNot = new RequestNotification(requesting.getEmail(), notified.getEmail(), desired.getId(), desired.getTitle(), desired.getExchange_location());
         assertEquals(reqNot.getRequestingEmail(), requesting.getEmail());
         assertEquals(reqNot.getNotifiedEmail(), notified.getEmail());
         assertEquals(reqNot.getGoodID(), desired.getId());
