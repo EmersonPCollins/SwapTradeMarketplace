@@ -1,9 +1,10 @@
 package com.example.myfirstapp.Activity;
 
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,97 +12,111 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfirstapp.R;
+import com.example.myfirstapp.domain.RequestNotification;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+/*
+class NotificationsAdapter extends RecyclerView.ViewHolder {
 
+    TextView goodName, goodDescription;
+    ImageView goodImage;
 
-import java.util.List;
+    public NotificationsAdapter (@NonNull View itemView) {
+        super(itemView);
+        goodName = itemView.findViewById(R.id.goodName);
+        goodDescription = itemView.findViewById(R.id.descriptionText);
+        goodImage = itemView.findViewById(R.id.goodImage);
+    }
+}
+ */
 
-public class NotificationsAdapter extends RecyclerView.Adapter {
+public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotification, NotificationsAdapter.NotificationsViewHolder> {
 
-    private static final String TAG = "NotificationsAdapter";
-    List<String> notificationsList;
-
-    public NotificationsAdapter(List<String> notificationsList) {
-        this.notificationsList = notificationsList;
+    private static final String TAG = "Adapter";
+    private static String notifiedEmail, requestingEmail;
+    /**
+     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
+     * {@link FirebaseRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
+    public NotificationsAdapter(@NonNull FirebaseRecyclerOptions<RequestNotification> options) {
+        super(options);
     }
 
-    // you need to return an integer that refers to the type of row you want at that position
     @Override
-    public int getItemViewType(int position) {
-        // whenever the word iron appears, show the itemview with the image
-        // so image itemview = 0, non-image itemview = 1
-        // need to change this so that whenever something occurs, it calls the write type of view
-        if(notificationsList.get(position).toLowerCase().contains("iron")) {
-            return 0;
+    protected void onBindViewHolder(@NonNull NotificationsViewHolder holder, int position, @NonNull RequestNotification model) {
+        holder.goodName.setText(model.getGoodTitle());
+        holder.goodLocation.setText(model.getLocation());
+
+        //notifiedEmail = model.getNotifiedEmail();
+        //requestingEmail = model.getRequestingEmail();
+        if(!model.getNotifiedEmail().equals(NotificationsActivity.storedEmail()) && !model.getRequestingEmail().equals(NotificationsActivity.storedEmail())) {
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }
-        return 1;
+
+
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NotificationsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view;
 
+        setEmails();
+
+
         if(viewType == 0) {
             view = layoutInflater.inflate(R.layout.accept_decline_row_item, parent, false);
-            return new ViewHolderOne(view);
+            return new NotificationsAdapter.NotificationsViewHolder(view);
         }
 
-        view = layoutInflater.inflate(R.layout.requested_row_item, parent, false);
-        return new ViewHolderTwo(view);
+        view = layoutInflater.inflate(R.layout.accept_decline_row_item, parent, false);
+        return new NotificationsAdapter.NotificationsViewHolder(view);
+
+        //return new NotificationsAdapter.NotificationsViewHolder(view);
     }
 
+
+
+    // you need to return an integer that refers to the type of row you want at that position
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(notificationsList.get(position).toLowerCase().contains("iron")) {
-           //bind viewholder one
-            ViewHolderOne viewHolderOne = (ViewHolderOne) holder;
-            viewHolderOne.goodName.setText(notificationsList.get(position));
-            viewHolderOne.descriptionText.setText(String.valueOf(position));
+    public int getItemViewType(int position) {
+        // accept-decline itemview = 0, requested itemview = 1
+        // whenever the storedEmail is equal to notifiedEmail, itemView = 0
+        // whenever the storedEmail is equal to requestingEmail, itemView = 1
+        if(NotificationsActivity.storedEmail().equals(notifiedEmail)) {
+            Log.i(TAG, "0 so storedEmail equals notifiedEmail, storedEmail: " + NotificationsActivity.storedEmail() + " notifiedEmail: " + notifiedEmail + " requestingEmail: " + requestingEmail);
+            return 0;
         }
-        else {
-            //bind viewholder two
-            ViewHolderTwo viewHolderTwo = (ViewHolderTwo) holder;
-            viewHolderTwo.goodName.setText(notificationsList.get(position));
-            viewHolderTwo.descriptionText.setText(String.valueOf(position));
-        }
+        Log.i(TAG, "1 so storedEmail equals requestingEmail, storedEmail: " + NotificationsActivity.storedEmail() + " notifiedEmail: " + notifiedEmail + " requestingEmail: " + requestingEmail);
+        return 1;
     }
 
-    @Override
-    public int getItemCount() {
-        return notificationsList.size();
+    private static void setEmails() {
+        notifiedEmail = "hey";
     }
 
-    // refers to accept/decline row item
-    class ViewHolderOne extends RecyclerView.ViewHolder {
 
-        TextView goodName, descriptionText;
+    public class NotificationsViewHolder extends RecyclerView.ViewHolder {
+
+        TextView goodName, goodLocation;
         ImageView goodImage;
-        Button acceptButton, declineButton;
-        public ViewHolderOne(@NonNull View itemView) {
+
+        public NotificationsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            goodName = itemView.findViewById(R.id.goodName);
-            descriptionText = itemView.findViewById(R.id.descriptionText);
-            goodImage = itemView.findViewById(R.id.goodImage);
-            acceptButton = itemView.findViewById(R.id.acceptButton);
-            declineButton = itemView.findViewById(R.id.declineButton);
+            goodName = (TextView) itemView.findViewById(R.id.goodName);
+            goodLocation = (TextView) itemView.findViewById(R.id.locationText);
+            goodImage = (ImageView) itemView.findViewById(R.id.goodImage);
         }
-    }
 
-    // refers to "requested" row item
-    class ViewHolderTwo extends RecyclerView.ViewHolder {
-
-        TextView goodName, descriptionText;
-        ImageView goodImage;
-        Button requestedButton;
-        public ViewHolderTwo(@NonNull View itemView) {
-            super(itemView);
-
-            goodName = itemView.findViewById(R.id.goodName);
-            descriptionText = itemView.findViewById(R.id.descriptionText);
-            goodImage = itemView.findViewById(R.id.goodImage);
-            requestedButton = itemView.findViewById(R.id.requestedButton);
-        }
     }
 }

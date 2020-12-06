@@ -31,18 +31,18 @@
         android:layout_marginRight="16dp"
         android:text="GoodName"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionText"
+        app:layout_constraintBottom_toTopOf="@+id/locationText"
         app:layout_constraintStart_toEndOf="@+id/goodImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/requestedButton"/>
 
 
     <TextView
-        android:id="@+id/descriptionText"
+        android:id="@+id/locationText"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginRight="16dp"
-        android:text="Description of good"
+        android:text="Location of good"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/goodName"
