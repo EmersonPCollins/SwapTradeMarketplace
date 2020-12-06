@@ -1,5 +1,6 @@
 package com.example.myfirstapp.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -31,6 +32,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 
 public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotification, RecyclerView.ViewHolder> {
 
@@ -46,7 +49,7 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position, @NonNull RequestNotification model) {
+    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position, final @NonNull RequestNotification model) {
         if(getItemViewType(position) == 0) {
             NotifiedViewHolder notifiedViewHolder = (NotifiedViewHolder) holder;
             notifiedViewHolder.goodName.setText(model.getGoodTitle());
@@ -62,6 +65,12 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
             notifiedViewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{model.getRequestingEmail()}); //recipient email
+                    email.putExtra(Intent.EXTRA_SUBJECT, "accepted request"); //subject
+                    email.putExtra(Intent.EXTRA_TEXT, "your request for " + model.getNotifiedEmail() + "'s product has been accepted"); //body
+                    email.setType("message/rfc822");
+                    view.getContext().startActivity(Intent.createChooser(email, "Choose an Email client :"));
                     Log.i(TAG, "position: " + p + " id: " + id);
                     deleteRequest(id, p);
                 }
