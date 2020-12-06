@@ -26,18 +26,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Ref;
+import java.util.List;
+
 public class NotificationsActivity extends AppCompatActivity{
 
     private RecyclerView notificationsRecycler;
     //NotificationsAdapter notificationsAdapter; // it looks like NotificationsAdapter and MyViewHolder are the same?
     //FirebaseRecyclerOptions<RequestNotification> options;
     NotificationsAdapter adapter;
-    boolean notification;
     static String storedEmail;
 
     DatabaseReference requestsRef;
-    DatabaseReference goodsRef;
     //DatabaseReference ref;
+
 
     private static final String TAG = "NotificationsActive";
 
@@ -64,131 +66,9 @@ public class NotificationsActivity extends AppCompatActivity{
 
 
 
+        SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+        storedEmail = preference.getString("email", "");
 
-      SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
-      storedEmail = preference.getString("email", "");
-
-
-      requestsRef.addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot snapshot) {
-              for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                    Log.i(TAG, requestSnapshot.getKey() + " : " + requestSnapshot.child("notifiedEmail").getValue());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        //       goodsRef = FirebaseDatabase.getInstance().getReference().child("goods");
-
-
-/*
-            requestsRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                        //if(storedEmail.equals(requestSnapshot.child("notifiedEmail").getValue())|| storedEmail.equals(requestSnapshot.child("requestingEmail").getValue())) {
-
-                        Log.i(TAG, "Is the stored email ("+ storedEmail + ") equal to notifiedEmail (" + requestSnapshot.child("notifiedEmail").getValue() + ")?: ");
-                        if(storedEmail.equals(requestSnapshot.child("notifiedEmail").getValue())
-                                || storedEmail.equals(requestSnapshot.child("requestingEmail").getValue()))
-                        {
-                            Log.i(TAG, "TRUE");
-                        }
-                        else {
-                            Log.i(TAG, "FALSE");
-
-                        }
-
-                        Log.i(TAG, requestSnapshot.getKey() + " : " + requestSnapshot.child("notifiedEmail").getValue());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
-            /*final Query notifiedEmailQuery = requestsRef.orderByChild("notifiedEmail").equalTo(storedEmail);
-            //Query requestingEmail = requestsRef.orderByChild("requestEmail").equalTo(storedEmail).limitToFirst(1);
-
-            String notifiedEmail, requestingEmail;
-            notifiedEmailQuery.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    Log.i(TAG, "" + dataSnapshot.hasChildren());
-                    for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
-                        String str = zoneSnapshot.child("requestingEmail").getValue(String.class);
-                        Log.i(TAG, str);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "onCancelled", databaseError.toException());
-                }
-            });
-
-*/
-
-
-            /*options = new FirebaseRecyclerOptions.Builder<RequestNotification>().setQuery(requestsRef, RequestNotification.class).build();
-
-            adapter = new FirebaseRecyclerAdapter<RequestNotification, NotificationsAdapter>(options) {
-               @Override
-                protected void onBindViewHolder(@NonNull final NotificationsAdapter notificationsAdapter, int i, @NonNull RequestNotification requestNotification) {
-
-
-
-                    //notificationsAdapter.goodName.setText(requestNotification.getGoodID());
-                    //notificationsAdapter.goodDescription.setText("Person who requested: " + requestNotification.getRequestingEmail());
-                    //if(storedEmail.equals(requestsRef.))
-                   goodsRef.child(requestNotification.getGoodID()).child("title").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            notificationsAdapter.goodName.setText("" + snapshot.getValue());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-
-                    });
-
-                    goodsRef.child(requestNotification.getGoodID()).child("description").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            notificationsAdapter.goodDescription.setText("" + snapshot.getValue());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-
-                    });
-
-
-                }
-
-                @NonNull
-                @Override
-                public NotificationsAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.accept_decline_row_item, parent, false);
-                    return new NotificationsAdapter(view);
-               }
-            };
-            */
 
     }
 
@@ -196,9 +76,6 @@ public class NotificationsActivity extends AppCompatActivity{
         return storedEmail;
     }
 
-    public static String notifiedEmail(String notifiedEmail) {
-        return notifiedEmail;
-    }
 
     @Override protected void onStart()
     {

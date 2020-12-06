@@ -20,25 +20,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-/*
-class NotificationsAdapter extends RecyclerView.ViewHolder {
 
-    TextView goodName, goodDescription;
-    ImageView goodImage;
-
-    public NotificationsAdapter (@NonNull View itemView) {
-        super(itemView);
-        goodName = itemView.findViewById(R.id.goodName);
-        goodDescription = itemView.findViewById(R.id.descriptionText);
-        goodImage = itemView.findViewById(R.id.goodImage);
-    }
-}
- */
 
 public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotification, NotificationsAdapter.NotificationsViewHolder> {
 
     private static final String TAG = "Adapter";
-    private static String notifiedEmail, requestingEmail;
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
      * {@link FirebaseRecyclerOptions} for configuration options.
@@ -54,8 +40,6 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
         holder.goodName.setText(model.getGoodTitle());
         holder.goodLocation.setText(model.getLocation());
 
-        //notifiedEmail = model.getNotifiedEmail();
-        //requestingEmail = model.getRequestingEmail();
         if(!model.getNotifiedEmail().equals(NotificationsActivity.storedEmail()) && !model.getRequestingEmail().equals(NotificationsActivity.storedEmail())) {
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
@@ -70,18 +54,14 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view;
 
-        setEmails();
-
-
         if(viewType == 0) {
             view = layoutInflater.inflate(R.layout.accept_decline_row_item, parent, false);
-            return new NotificationsAdapter.NotificationsViewHolder(view);
+        }
+        else{
+            view = layoutInflater.inflate(R.layout.requested_row_item, parent, false);
         }
 
-        view = layoutInflater.inflate(R.layout.accept_decline_row_item, parent, false);
         return new NotificationsAdapter.NotificationsViewHolder(view);
-
-        //return new NotificationsAdapter.NotificationsViewHolder(view);
     }
 
 
@@ -92,16 +72,11 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
         // accept-decline itemview = 0, requested itemview = 1
         // whenever the storedEmail is equal to notifiedEmail, itemView = 0
         // whenever the storedEmail is equal to requestingEmail, itemView = 1
-        if(NotificationsActivity.storedEmail().equals(notifiedEmail)) {
-            Log.i(TAG, "0 so storedEmail equals notifiedEmail, storedEmail: " + NotificationsActivity.storedEmail() + " notifiedEmail: " + notifiedEmail + " requestingEmail: " + requestingEmail);
+        RequestNotification model = getItem(position);
+        if(NotificationsActivity.storedEmail().equals(model.getNotifiedEmail())) {
             return 0;
         }
-        Log.i(TAG, "1 so storedEmail equals requestingEmail, storedEmail: " + NotificationsActivity.storedEmail() + " notifiedEmail: " + notifiedEmail + " requestingEmail: " + requestingEmail);
         return 1;
-    }
-
-    private static void setEmails() {
-        notifiedEmail = "hey";
     }
 
 
