@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfirstapp.R;
+import com.example.myfirstapp.domain.Good;
 import com.example.myfirstapp.domain.RequestNotification;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 
-public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotification, NotificationsAdapter.NotificationsViewHolder> {
+public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotification, RecyclerView.ViewHolder> {
 
     private static final String TAG = "Adapter";
     /**
@@ -42,13 +46,44 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull NotificationsViewHolder holder, int position, @NonNull RequestNotification model) {
-        holder.goodName.setText(model.getGoodTitle());
-        holder.goodLocation.setText(model.getLocation());
+    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position, @NonNull RequestNotification model) {
+        if(getItemViewType(position) == 0) {
+            NotifiedViewHolder notifiedViewHolder = (NotifiedViewHolder) holder;
+            notifiedViewHolder.goodName.setText(model.getGoodTitle());
+            notifiedViewHolder.goodLocation.setText(model.getLocation());
 
-        View v = holder.itemView;
-        ImageView foto = v.findViewById(R.id.goodImage);
-        getImage(position, foto);
+            View v = notifiedViewHolder.itemView;
+            ImageView photo = v.findViewById(R.id.goodImage);
+            getImage(position, photo);
+
+            final String id = model.getId();
+            final int p = position;
+
+            notifiedViewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(TAG, "position: " + p + " id: " + id);
+                    deleteRequest(id, p);
+                }
+            });
+
+            notifiedViewHolder.declineButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(TAG, "position: " + p + " id: " + id);
+                    deleteRequest(id, p);
+                }
+            });
+        }
+        else {
+            RequestedViewHolder requestedViewHolder = (RequestedViewHolder) holder;
+            requestedViewHolder.goodName.setText(model.getGoodTitle());
+            requestedViewHolder.goodLocation.setText(model.getLocation());
+
+            View v = requestedViewHolder.itemView;
+            ImageView photo = v.findViewById(R.id.goodImage);
+            getImage(position, photo);
+        }
 
         if(!model.getNotifiedEmail().equals(NotificationsActivity.storedEmail()) && !model.getRequestingEmail().equals(NotificationsActivity.storedEmail())) {
             holder.itemView.setVisibility(View.GONE);
@@ -57,20 +92,35 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
 
     }
 
+    private void deleteRequest(String id, final int position) {
+        FirebaseDatabase.getInstance().getReference("requests").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
+                }
+                else{
+                    Log.d("Delete notification", "Could not be deleted");
+                }
+            }
+        });
+    }
+
+
     @NonNull
     @Override
-    public NotificationsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view;
 
         if(viewType == 0) {
             view = layoutInflater.inflate(R.layout.accept_decline_row_item, parent, false);
-        }
-        else{
-            view = layoutInflater.inflate(R.layout.requested_row_item, parent, false);
+            return new NotifiedViewHolder(view);
         }
 
-        return new NotificationsAdapter.NotificationsViewHolder(view);
+            view = layoutInflater.inflate(R.layout.requested_row_item, parent, false);
+            return new RequestedViewHolder(view);
     }
 
 
@@ -95,7 +145,6 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
         ref.child("image_url").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i(TAG, "DATASNAPSHOT: " + dataSnapshot +" "+ dataSnapshot.getValue());
                 if(!dataSnapshot.getValue().equals("")) {
                     str.add(dataSnapshot.getValue(String.class));
                     StorageReference sRef = (StorageReference) FirebaseStorage.getInstance().getReference().child("images").child(str.get(0));
@@ -118,19 +167,32 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<RequestNotific
         });
     }
 
-
-    public class NotificationsViewHolder extends RecyclerView.ViewHolder {
-
+    class NotifiedViewHolder extends RecyclerView.ViewHolder {
         TextView goodName, goodLocation;
         ImageView goodImage;
+        Button acceptButton, declineButton;
 
-        public NotificationsViewHolder(@NonNull View itemView) {
+        public NotifiedViewHolder(@NonNull View itemView) {
             super(itemView);
-
             goodName = (TextView) itemView.findViewById(R.id.goodName);
             goodLocation = (TextView) itemView.findViewById(R.id.locationText);
             goodImage = (ImageView) itemView.findViewById(R.id.goodImage);
+            acceptButton = (Button) itemView.findViewById(R.id.acceptButton);
+            declineButton = (Button) itemView.findViewById(R.id.declineButton);
         }
+    }
 
+    class RequestedViewHolder extends RecyclerView.ViewHolder {
+        TextView goodName, goodLocation;
+        ImageView goodImage;
+        Button requestedButton;
+
+        public RequestedViewHolder(@NonNull View itemView) {
+            super(itemView);
+            goodName = (TextView) itemView.findViewById(R.id.goodName);
+            goodLocation = (TextView) itemView.findViewById(R.id.locationText);
+            goodImage = (ImageView) itemView.findViewById(R.id.goodImage);
+            requestedButton = (Button) itemView.findViewById(R.id.requestedButton);
+        }
     }
 }
