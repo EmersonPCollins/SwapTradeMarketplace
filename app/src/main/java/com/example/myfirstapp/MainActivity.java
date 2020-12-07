@@ -66,14 +66,15 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
                             }
+                            else{
+                                errorText.setText("The email address or password does not match any account.");
+                            }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
                         }});
-
-                    errorText.setText("The email address or password does not match any account.");
                 }
             }
         });
