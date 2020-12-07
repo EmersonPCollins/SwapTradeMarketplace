@@ -1,8 +1,7 @@
 package com.example.myfirstapp.Activity;
-import android.os.Bundle;
-import android.widget.SearchView;
-import android.widget.Spinner;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -10,6 +9,7 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,10 +18,13 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.domain.Good;
+import com.example.myfirstapp.domain.RequestNotification;
+import com.example.myfirstapp.service.DatabaseService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -41,58 +44,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
-        final LinearLayout ll = new LinearLayout(this);
-        ll.setOrientation(LinearLayout.VERTICAL);
-        ll.setGravity(Gravity.CENTER);
-        sv.addView(ll);
-
-        final ArrayList<Good> listOfGoods = new ArrayList<Good>();
-
-        final Spinner categorySpinner = (Spinner) findViewById(R.id.categoriesSearchSpinner);
-        final Spinner locationSpinner = (Spinner) findViewById(R.id.locationSearchSpinner);
-        SearchView searchView = (SearchView) findViewById(R.id.searchField);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(final String query) {
-
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("goods");
-                final String categorySpinnerValue = categorySpinner.getSelectedItem().toString();
-                final String locationSpinnerValue = locationSpinner.getSelectedItem().toString();
-
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        listOfGoods.clear();
-
-                        for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
-                            Good good = adSnapshot.getValue(Good.class);
-                            if (good == null || good.getTitle() == null || good.getType() == null || good.getExchange_location() == null) {
-                                continue;
-                            }
-
-                            if (good.getTitle().contains(query) && good.getType().equals(categorySpinnerValue) && good.getExchange_location().contains(locationSpinnerValue)) {
-                                listOfGoods.add(good);
-
-                            }
-                        }
-
-                        displayGoods(listOfGoods, ll);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }});
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        readAllGoods();
     }
 
     public void readAllGoods() {
@@ -113,6 +65,7 @@ public class SearchActivity extends AppCompatActivity {
                     Good good = new Good(title, null, date, description, location, user, url, type);
                     goods.add(good);
                 }
+                displayGoods(goods);
             }
 
             @Override
@@ -122,9 +75,12 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    public void displayGoods(ArrayList<Good> goods, LinearLayout ll) {
-
-        ll.removeAllViews();
+    public void displayGoods(ArrayList<Good> goods) {
+        ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.setGravity(Gravity.CENTER);
+        sv.addView(ll);
 
         for (Good good: goods) {
             TextView goodName = new TextView(this);
@@ -159,7 +115,34 @@ public class SearchActivity extends AppCompatActivity {
             layoutParams.setMargins(0, 0, 0, 40);
             ll.addView(goodDescription,layoutParams);
 
+
+            //if button is pressed call alert
+            requestButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    confirmAlert();
+                }
+            });
         }
+    }
+
+    private void confirmAlert(){
+        //if request button is pressed create confirmation popup
+        final AlertDialog.Builder confirmRequest = new AlertDialog.Builder(this);
+        confirmRequest.setTitle("Confirmation Message").setMessage("Are you sure?");
+        confirmRequest.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i){
+
+            }
+        });
+        confirmRequest.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        confirmRequest.show();
     }
 
     private ImageView getImage(String url) {
@@ -185,6 +168,4 @@ public class SearchActivity extends AppCompatActivity {
 
         return goodImage;
     }
-
-
 }
