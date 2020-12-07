@@ -47,7 +47,59 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        readAllGoods();
+        ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
+        final LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.setGravity(Gravity.CENTER);
+        sv.addView(ll);
+
+        final ArrayList<Good> listOfGoods = new ArrayList<Good>();
+
+        final Spinner categorySpinner = (Spinner) findViewById(R.id.categoriesSearchSpinner);
+        final Spinner locationSpinner = (Spinner) findViewById(R.id.locationSearchSpinner);
+        SearchView searchView = (SearchView) findViewById(R.id.searchField);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("goods");
+                final String categorySpinnerValue = categorySpinner.getSelectedItem().toString();
+                final String locationSpinnerValue = locationSpinner.getSelectedItem().toString();
+
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        listOfGoods.clear();
+
+                        for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
+                            Good good = adSnapshot.getValue(Good.class);
+                            if (good == null || good.getTitle() == null || good.getType() == null || good.getExchange_location() == null) {
+                                continue;
+                            }
+
+                            if (good.getTitle().contains(query) && good.getType().equals(categorySpinnerValue) && good.getExchange_location().contains(locationSpinnerValue)) {
+                                listOfGoods.add(good);
+
+                            }
+                        }
+
+                        displayGoods(listOfGoods, ll);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     public void readAllGoods() {
@@ -57,7 +109,7 @@ public class SearchActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot messageSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot messageSnapshot : snapshot.getChildren()) {
                     String title = (String) messageSnapshot.child("title").getValue();
                     String date = (String) messageSnapshot.child("availability_end_date").getValue();
                     String description = (String) messageSnapshot.child("description").getValue();
@@ -68,7 +120,6 @@ public class SearchActivity extends AppCompatActivity {
                     Good good = new Good(title, null, date, description, location, user, url, type);
                     goods.add(good);
                 }
-                displayGoods(goods);
             }
 
             @Override
@@ -78,14 +129,11 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    public void displayGoods(ArrayList<Good> goods) {
-        ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
-        LinearLayout ll = new LinearLayout(this);
-        ll.setOrientation(LinearLayout.VERTICAL);
-        ll.setGravity(Gravity.CENTER);
-        sv.addView(ll);
+    public void displayGoods(ArrayList<Good> goods, LinearLayout ll) {
 
-        for (final Good good: goods) {
+        ll.removeAllViews();
+
+        for (final Good good : goods) {
             TextView goodName = new TextView(this);
             goodName.setText(good.getTitle());
             goodName.setTextColor(Color.BLUE);
@@ -99,38 +147,18 @@ public class SearchActivity extends AppCompatActivity {
             Button requestButton = new Button(this);
             requestButton.setText("Request");
             LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(500, 100);
-            ll.addView(requestButton,layoutParams2);
+            ll.addView(requestButton, layoutParams2);
 
-            TextView goodLocation = new TextView(this);
-            goodLocation.setText(good.getExchange_location());
-            goodLocation.setGravity(Gravity.CENTER);
-            ll.addView(goodLocation);
-
-            TextView goodType = new TextView(this);
-            goodType.setText(good.getType());
-            goodType.setGravity(Gravity.CENTER);
-            ll.addView(goodType);
-
-            TextView goodDescription = new TextView(this);
-            goodDescription.setText(good.getDescription());
-            goodDescription.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 100);
-            layoutParams.setMargins(0, 0, 0, 40);
-            ll.addView(goodDescription,layoutParams);
-
-
-            //if button is pressed call alert
-            //AlertDialog.Builder confirmRequest = new AlertDialog.Builder(this);
             requestButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     //Make alert and functionality
                     //if request button is pressed create confirmation popup
                     AlertDialog.Builder confirmRequest = new AlertDialog.Builder(SearchActivity.this);
                     confirmRequest.setTitle("Confirmation Message").setMessage("Are you sure?");
-                    confirmRequest.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                    confirmRequest.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i){
+                        public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
                             String loggedinUser = preference.getString("email", "");
 
@@ -148,8 +176,27 @@ public class SearchActivity extends AppCompatActivity {
                     confirmRequest.show();
                 }
             });
+
+            TextView goodLocation = new TextView(this);
+            goodLocation.setText(good.getExchange_location());
+            goodLocation.setGravity(Gravity.CENTER);
+            ll.addView(goodLocation);
+
+            TextView goodType = new TextView(this);
+            goodType.setText(good.getType());
+            goodType.setGravity(Gravity.CENTER);
+            ll.addView(goodType);
+
+            TextView goodDescription = new TextView(this);
+            goodDescription.setText(good.getDescription());
+            goodDescription.setGravity(Gravity.CENTER);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 100);
+            layoutParams.setMargins(0, 0, 0, 40);
+            ll.addView(goodDescription, layoutParams);
+
         }
     }
+
     private ImageView getImage(String url) {
         final ImageView goodImage = new ImageView(this);
         if (url == null) return goodImage;
@@ -173,6 +220,7 @@ public class SearchActivity extends AppCompatActivity {
 
         return goodImage;
     }
-
-
 }
+
+
+
