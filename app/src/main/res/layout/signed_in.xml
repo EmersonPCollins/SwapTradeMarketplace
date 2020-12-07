@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/recieveButton"
+        android:id="@+id/notificationButton"
         android:layout_width="133dp"
         android:layout_height="83dp"
         android:layout_marginStart="41dp"
@@ -16,7 +16,7 @@
         android:layout_marginEnd="41dp"
         android:layout_marginRight="41dp"
         android:layout_marginBottom="81dp"
-        android:text="Receive Good"
+        android:text="Notifications"
         app:layout_constraintBottom_toTopOf="@+id/browseButton"
         app:layout_constraintEnd_toStartOf="@+id/provideButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/SettingsButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recieveButton" />
+        app:layout_constraintTop_toBottomOf="@+id/notificationButton" />
 
     <Button
         android:id="@+id/SettingsButton"
@@ -67,7 +67,7 @@
         android:text="Provide Good"
         app:layout_constraintBottom_toTopOf="@+id/SettingsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recieveButton"
+        app:layout_constraintStart_toEndOf="@+id/notificationButton"
         app:layout_constraintTop_toBottomOf="@+id/welcomeMessage" />
 
     <TextView
