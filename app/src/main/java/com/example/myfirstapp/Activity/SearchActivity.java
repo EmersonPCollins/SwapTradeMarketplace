@@ -1,4 +1,5 @@
 package com.example.myfirstapp.Activity;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirstapp.R;
@@ -87,7 +89,8 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
-                    }});
+                    }
+                });
 
                 return false;
             }
@@ -106,7 +109,7 @@ public class SearchActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot messageSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot messageSnapshot : snapshot.getChildren()) {
                     String title = (String) messageSnapshot.child("title").getValue();
                     String date = (String) messageSnapshot.child("availability_end_date").getValue();
                     String description = (String) messageSnapshot.child("description").getValue();
@@ -130,7 +133,7 @@ public class SearchActivity extends AppCompatActivity {
 
         ll.removeAllViews();
 
-        for (final Good good: goods) {
+        for (final Good good : goods) {
             TextView goodName = new TextView(this);
             goodName.setText(good.getTitle());
             goodName.setTextColor(Color.BLUE);
@@ -144,17 +147,33 @@ public class SearchActivity extends AppCompatActivity {
             Button requestButton = new Button(this);
             requestButton.setText("Request");
             LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(500, 100);
-            ll.addView(requestButton,layoutParams2);
+            ll.addView(requestButton, layoutParams2);
 
             requestButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
-                    String loggedinUser = preference.getString("email", "");
+                    //Make alert and functionality
+                    //if request button is pressed create confirmation popup
+                    AlertDialog.Builder confirmRequest = new AlertDialog.Builder(SearchActivity.this);
+                    confirmRequest.setTitle("Confirmation Message").setMessage("Are you sure?");
+                    confirmRequest.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            SharedPreferences preference = getSharedPreferences("login", MODE_PRIVATE);
+                            String loggedinUser = preference.getString("email", "");
 
-                    RequestNotification request = new RequestNotification(loggedinUser, good.getUser_email(), good.getId(), good.getTitle(), good.getExchange_location());
-                    DatabaseService db = new DatabaseService();
-                    db.writeRequestNotification(request);
+                            RequestNotification request = new RequestNotification(loggedinUser, good.getUser_email(), good.getId(), good.getTitle(), good.getExchange_location());
+                            DatabaseService db = new DatabaseService();
+                            db.writeRequestNotification(request);
+                        }
+                    });
+                    confirmRequest.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    confirmRequest.show();
                 }
             });
 
@@ -173,7 +192,7 @@ public class SearchActivity extends AppCompatActivity {
             goodDescription.setGravity(Gravity.CENTER);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 100);
             layoutParams.setMargins(0, 0, 0, 40);
-            ll.addView(goodDescription,layoutParams);
+            ll.addView(goodDescription, layoutParams);
 
         }
     }
@@ -201,6 +220,7 @@ public class SearchActivity extends AppCompatActivity {
 
         return goodImage;
     }
-
-
 }
+
+
+
